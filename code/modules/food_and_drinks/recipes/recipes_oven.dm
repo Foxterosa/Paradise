@@ -40,9 +40,9 @@
 		/obj/item/reagent_containers/food/snacks/dough,
 		/obj/item/reagent_containers/food/snacks/dough,
 		/obj/item/reagent_containers/food/snacks/dough,
-		/obj/item/reagent_containers/food/snacks/monstermeat/xenomeat,
-		/obj/item/reagent_containers/food/snacks/monstermeat/xenomeat,
-		/obj/item/reagent_containers/food/snacks/monstermeat/xenomeat,
+		/obj/item/reagent_containers/food/snacks/xenomeat,
+		/obj/item/reagent_containers/food/snacks/xenomeat,
+		/obj/item/reagent_containers/food/snacks/xenomeat,
 		/obj/item/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/reagent_containers/food/snacks/cheesewedge,
@@ -115,7 +115,7 @@
 /datum/recipe/oven/xemeatpie
 	items = list(
 		/obj/item/reagent_containers/food/snacks/sliceable/flatdough,
-		/obj/item/reagent_containers/food/snacks/monstermeat/xenomeat
+		/obj/item/reagent_containers/food/snacks/xenomeat,
 	)
 	result = /obj/item/reagent_containers/food/snacks/xemeatpie
 
@@ -480,3 +480,29 @@
 		/obj/item/reagent_containers/food/snacks/dough
 	)
 	result = /obj/item/reagent_containers/food/snacks/lasagna
+
+	//Pancake by Nothing (Con ayuda de Ume, gracias!)
+/datum/recipe/oven/pancake
+    reagents = list("sugar" = 5, "sodiumchloride" = 1)
+    items = list(
+        /obj/item/reagent_containers/food/snacks/sliceable/flatdough,
+    )
+    result = /obj/item/reagent_containers/food/snacks/pancake
+
+	///HoneyPie by Nothing (Thanks Ume)
+/datum/recipe/oven/honeypie
+    reagents = list("honey" = 5)
+    items = list(
+        /obj/item/reagent_containers/food/snacks/sliceable/flatdough,
+    )
+    result = /obj/item/reagent_containers/food/snacks/pie/honey
+
+///HoneyBread(For Luka <3 )
+/datum/recipe/oven/honeybread
+    reagents = list("honey" = 15)
+    items = list(
+		/obj/item/reagent_containers/food/snacks/dough,
+		/obj/item/reagent_containers/food/snacks/dough,
+		/obj/item/reagent_containers/food/snacks/dough,
+    )
+    result = /obj/item/reagent_containers/food/snacks/sliceable/honeybread
