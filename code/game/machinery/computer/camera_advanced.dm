@@ -1,6 +1,6 @@
 /obj/machinery/computer/camera_advanced
-	name = "advanced camera console"
-	desc = "Used to access the various cameras on the station."
+	name = "consola de camaras avanzada"
+	desc = "Usada para acceder a las camaras de la estacion, de una forma mas eficiente."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
 	var/mob/camera/aiEye/remote/eyeobj
@@ -62,7 +62,7 @@
 
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user)
 	if(current_user)
-		to_chat(user, "The console is already in use!")
+		to_chat(user, "La consola ya esta en uso!")
 		return
 	if(!iscarbon(user))
 		return
@@ -87,7 +87,7 @@
 			eyeobj.setLoc(camera_location)
 		else
 			// An abberant case - silent failure is obnoxious
-			to_chat(user, "<span class='warning'>ERROR: No linked and active camera network found.</span>")
+			to_chat(user, "<span class='warning'>ERROR: No se han encontrado camaras activas ni sincronizadas.</span>")
 			user.unset_machine()
 	else
 		give_eye_control(user)
@@ -98,14 +98,14 @@
 	GrantActions(user)
 	current_user = user
 	eyeobj.eye_user = user
-	eyeobj.name = "Camera Eye ([user.name])"
+	eyeobj.name = "Ojo de camara ([user.name])"
 	// This should be able to be excised once the full view refactor rolls out
 	user.remote_view = 1
 	user.remote_control = eyeobj
 	user.reset_perspective(eyeobj)
 
 /mob/camera/aiEye/remote
-	name = "Inactive Camera Eye"
+	name = "Ojo inactivo de camara"
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
@@ -165,7 +165,7 @@
 		sprint = initial
 
 /datum/action/innate/camera_off
-	name = "End Camera View"
+	name = "Terminar de ver"
 	button_icon_state = "camera_off"
 
 /datum/action/innate/camera_off/Activate()
@@ -177,7 +177,7 @@
 	console.remove_eye_control(target)
 
 /datum/action/innate/camera_jump
-	name = "Jump To Camera"
+	name = "Elegir una camara"
 	button_icon_state = "camera_jump"
 
 /datum/action/innate/camera_jump/Activate()

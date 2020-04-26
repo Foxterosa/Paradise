@@ -1,7 +1,7 @@
 /obj/structure/AIcore
 	density = 1
 	anchored = 0
-	name = "AI core"
+	name = "Nucleo de Inteligencia Artifial"
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "0"
 	max_integrity = 500

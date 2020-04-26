@@ -1,6 +1,6 @@
 /obj/machinery/computer/security
-	name = "security camera console"
-	desc = "Used to access the various cameras networks on the station."
+	name = "consola de camaras"
+	desc = "Usada para acceder a las varias camaras que se ubican en la estacion."
 
 	icon_keyboard = "security_key"
 	icon_screen = "cameras"
@@ -18,24 +18,24 @@
 	..()
 
 /obj/machinery/computer/security/proc/generate_network_access()
-	available_networks["SS13"] =              list(ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Telecomms"] =         list(ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Research Outpost"] =  list(ACCESS_RD,ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Mining Outpost"] =    list(ACCESS_QM,ACCESS_HOP,ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Research"] =          list(ACCESS_RD,ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Prison"] =            list(ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Labor Camp"] =        list(ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Interrogation"] =     list(ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Atmosphere Alarms"] = list(ACCESS_CE,ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Fire Alarms"] =       list(ACCESS_CE,ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Power Alarms"] =      list(ACCESS_CE,ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Supermatter"] =       list(ACCESS_CE,ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["MiniSat"] =           list(ACCESS_RD,ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Singularity"] =       list(ACCESS_CE,ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Anomaly Isolation"] = list(ACCESS_RD,ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["Toxins"] =            list(ACCESS_RD,ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["ISS Manaos"] =              list(ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Telecomunicaciones"] =         list(ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Puesto de Ciencias"] =  list(ACCESS_RD,ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Puesto de Mineria"] =    list(ACCESS_QM,ACCESS_HOP,ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Ciencias"] =          list(ACCESS_RD,ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Prision"] =            list(ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Gulag"] =        list(ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Interrogaciones"] =     list(ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Alarmas Atmosfericas"] = list(ACCESS_CE,ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Alarmas de Fuego"] =       list(ACCESS_CE,ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Alarmas de energia"] =      list(ACCESS_CE,ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Super Materia"] =       list(ACCESS_CE,ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Mini Satelite"] =           list(ACCESS_RD,ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Singularidad"] =       list(ACCESS_CE,ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Insolacion de anomalia"] = list(ACCESS_RD,ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Toxinas"] =            list(ACCESS_RD,ACCESS_HOS,ACCESS_CAPTAIN)
 	available_networks["Telepad"] =           list(ACCESS_RD,ACCESS_HOS,ACCESS_CAPTAIN)
-	available_networks["TestChamber"] =       list(ACCESS_RD,ACCESS_HOS,ACCESS_CAPTAIN)
+	available_networks["Camara de prueba"] =       list(ACCESS_RD,ACCESS_HOS,ACCESS_CAPTAIN)
 	available_networks["ERT"] =               list(ACCESS_CENT_SPECOPS_COMMANDER,ACCESS_CENT_COMMANDER)
 	available_networks["CentComm"] =          list(ACCESS_CENT_SECURITY,ACCESS_CENT_COMMANDER)
 	available_networks["Thunderdome"] =       list(ACCESS_CENT_THUNDER,ACCESS_CENT_COMMANDER)
@@ -101,7 +101,7 @@
 /obj/machinery/computer/security/emag_act(user as mob)
 	if(!emagged)
 		emagged = 1
-		to_chat(user, "<span class='notice'>You have authorized full network access!</span>")
+		to_chat(user, "<span class='notice'>Ahora puedes ver todas las camaras con restriccion de acceso!</span>")
 		attack_hand(user)
 	else
 		attack_hand(user)

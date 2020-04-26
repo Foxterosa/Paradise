@@ -1,6 +1,6 @@
 /obj/machinery/computer/brigcells
-    name = "cell management computer"
-    desc = "Used to manage prison cells."
+    name = "computadora de control de celdas"
+    desc = "Usada para manejar celdas en prisiones"
     icon_keyboard = "security_key"
     icon_screen = "cell_monitor"
     use_power = IDLE_POWER_USE
@@ -19,7 +19,7 @@
     if(stat & (BROKEN|NOPOWER))
         return
     if(!allowed(user))
-        to_chat(user, "<span class='warning'>Access denied.</span>")
+        to_chat(user, "<span class='warning'>Acceso denegado.</span>")
         return
     ui_interact(user)
 
@@ -36,9 +36,9 @@
     for(var/obj/machinery/door_timer/T in GLOB.celltimers_list)
         var/timer = list()
         timer["cell_id"] = T.name
-        timer["occupant"] = T.occupant
-        timer["crimes"] = T.crimes
-        timer["brigged_by"] = T.officer
+        timer["ocupante"] = T.occupant
+        timer["crimenes"] = T.crimes
+        timer["arrestado por"] = T.officer
         if(T.time == 0)
             timer["background"] = "'background-color:#007f47'"
         else
@@ -55,4 +55,4 @@
     if(href_list["release"])
         var/obj/machinery/door_timer/T = locate(href_list["release"])
         T.timer_end()
-        T.Radio.autosay("Timer stopped manually from a cell management console.", T.name, "Security", list(z))
+        T.Radio.autosay("El tiempo a sido manualmente detenido por una computadora de control de celdas.", T.name, "Security", list(z))

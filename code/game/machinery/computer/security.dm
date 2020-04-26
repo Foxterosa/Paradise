@@ -3,8 +3,8 @@
 #define SEC_DATA_RECORD	3	// Record
 
 /obj/machinery/computer/secure_data//TODO:SANITY
-	name = "security records"
-	desc = "Used to view and edit personnel's security records."
+	name = "consola de registros"
+	desc = "Usada para ver y editar los registros del personal abordo."
 	icon_keyboard = "security_key"
 	icon_screen = "security"
 	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
@@ -43,7 +43,7 @@
 	if(..())
 		return
 	if(is_away_level(z))
-		to_chat(user, "<span class='danger'>Unable to establish a connection</span>: You're too far away from the station!")
+		to_chat(user, "<span class='danger'>No es posible estabilizar conexion</span>: Tu estas muy lejos de la estacion!")
 		return
 	add_fingerprint(user)
 	ui_interact(user)
@@ -72,20 +72,20 @@
 								break
 						var/background = "''"
 						switch(crimstat)
-							if("*Execute*")
+							if("*Ejecutar*")
 								background = "'background-color:#5E0A1A'"
-							if("*Arrest*")
+							if("*Arrestar*")
 								background = "'background-color:#890E26'"
-							if("Incarcerated")
+							if("Encarcelado")
 								background = "'background-color:#743B03'"
 							if("Parolled")
 								background = "'background-color:#743B03'"
-							if("Released")
+							if("Liberado")
 								background = "'background-color:#216489'"
-							if("None")
+							if("Ninguno")
 								background = "'background-color:#007f47'"
-							if("null")
-								crimstat = "No record."
+							if("Nulo")
+								crimstat = "No hay registros."
 						data["records"] += list(list("ref" = "\ref[R]", "id" = R.fields["id"], "name" = R.fields["name"], "rank" = R.fields["rank"], "fingerprint" = R.fields["fingerprint"], "background" = background, "crimstat" = crimstat))
 			if(SEC_DATA_RECORD)
 				var/list/general = list()
@@ -93,14 +93,14 @@
 				if(istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1))
 					var/list/fields = list()
 					general["fields"] = fields
-					fields[++fields.len] = list("field" = "Name:", "value" = active1.fields["name"], "edit" = "name")
+					fields[++fields.len] = list("field" = "Nombre:", "value" = active1.fields["name"], "edit" = "name")
 					fields[++fields.len] = list("field" = "ID:", "value" = active1.fields["id"], "edit" = "id")
-					fields[++fields.len] = list("field" = "Sex:", "value" = active1.fields["sex"], "edit" = "sex")
-					fields[++fields.len] = list("field" = "Age:", "value" = active1.fields["age"], "edit" = "age")
-					fields[++fields.len] = list("field" = "Rank:", "value" = active1.fields["rank"], "edit" = "rank")
-					fields[++fields.len] = list("field" = "Fingerprint:", "value" = active1.fields["fingerprint"], "edit" = "fingerprint")
-					fields[++fields.len] = list("field" = "Physical Status:", "value" = active1.fields["p_stat"], "edit" = null)
-					fields[++fields.len] = list("field" = "Mental Status:", "value" = active1.fields["m_stat"], "edit" = null)
+					fields[++fields.len] = list("field" = "Sexo:", "value" = active1.fields["sex"], "edit" = "sex")
+					fields[++fields.len] = list("field" = "Edad:", "value" = active1.fields["age"], "edit" = "age")
+					fields[++fields.len] = list("field" = "Rango:", "value" = active1.fields["rank"], "edit" = "rank")
+					fields[++fields.len] = list("field" = "Huellas dactirales:", "value" = active1.fields["fingerprint"], "edit" = "fingerprint")
+					fields[++fields.len] = list("field" = "Estado fisico:", "value" = active1.fields["p_stat"], "edit" = null)
+					fields[++fields.len] = list("field" = "Estado mental:", "value" = active1.fields["m_stat"], "edit" = null)
 					var/list/photos = list()
 					general["photos"] = photos
 					photos[++photos.len] = list("photo" = active1.fields["photo-south"])
@@ -115,12 +115,12 @@
 				if(istype(active2, /datum/data/record) && GLOB.data_core.security.Find(active2))
 					var/list/fields = list()
 					security["fields"] = fields
-					fields[++fields.len] = list("field" = "Criminal Status:", "value" = active2.fields["criminal"], "edit" = "criminal", "line_break" = 1)
-					fields[++fields.len] = list("field" = "Minor Crimes:", "value" = active2.fields["mi_crim"], "edit" = "mi_crim", "line_break" = 0)
-					fields[++fields.len] = list("field" = "Details:", "value" = active2.fields["mi_crim_d"], "edit" = "mi_crim_d", "line_break" = 1)
-					fields[++fields.len] = list("field" = "Major Crimes:", "value" = active2.fields["ma_crim"], "edit" = "ma_crim", "line_break" = 0)
-					fields[++fields.len] = list("field" = "Details:", "value" = active2.fields["ma_crim_d"], "edit" = "ma_crim_d", "line_break" = 1)
-					fields[++fields.len] = list("field" = "Important Notes:", "value" = active2.fields["notes"], "edit" = "notes", "line_break" = 0)
+					fields[++fields.len] = list("field" = "Estado criminal:", "value" = active2.fields["criminal"], "edit" = "criminal", "line_break" = 1)
+					fields[++fields.len] = list("field" = "Crimenes menores:", "value" = active2.fields["mi_crim"], "edit" = "mi_crim", "line_break" = 0)
+					fields[++fields.len] = list("field" = "Detalles:", "value" = active2.fields["mi_crim_d"], "edit" = "mi_crim_d", "line_break" = 1)
+					fields[++fields.len] = list("field" = "Crimenes mayores:", "value" = active2.fields["ma_crim"], "edit" = "ma_crim", "line_break" = 0)
+					fields[++fields.len] = list("field" = "Detalles:", "value" = active2.fields["ma_crim_d"], "edit" = "ma_crim_d", "line_break" = 1)
+					fields[++fields.len] = list("field" = "Notas importantes:", "value" = active2.fields["notes"], "edit" = "notes", "line_break" = 0)
 					if(!active2.fields["comments"] || !islist(active2.fields["comments"]))
 						active2.fields["comments"] = list()
 					security["comments"] = active2.fields["comments"]
@@ -148,13 +148,13 @@
 				for(var/datum/data/record/R in GLOB.data_core.security)
 					qdel(R)
 				update_all_mob_security_hud()
-				setTemp("<h3>All records deleted.</h3>")
+				setTemp("<h3>Todos los registros borrados.</h3>")
 			if("del_alllogs2")
 				if(GLOB.cell_logs.len)
-					setTemp("<h3>All cell logs deleted.</h3>")
+					setTemp("<h3>Todos los registros de encarcelamientos borrados.</h3>")
 					GLOB.cell_logs.Cut()
 				else
-					to_chat(usr, "<span class='notice'>Error; No cell logs to delete.</span>")
+					to_chat(usr, "<span class='notice'>Error; No hay registros de encarcelamientos para borrar.</span>")
 			if("del_r2")
 				if(active2)
 					qdel(active2)
@@ -172,13 +172,13 @@
 				if(active2)
 					var/t1
 					if(temp_href[2] == "execute")
-						t1 = copytext(trim(sanitize(input("Explain why they are being executed. Include a list of their crimes, and victims.", "EXECUTION ORDER", null, null) as text)), 1, MAX_MESSAGE_LEN)
+						t1 = copytext(trim(sanitize(input("Explica porque el esta siendo ejecutado, esto incluye una lista de sus crimenes y victimas.", "EXECUTION ORDER", null, null) as text)), 1, MAX_MESSAGE_LEN)
 					else
-						t1 = copytext(trim(sanitize(input("Enter Reason:", "Secure. records", null, null) as text)), 1, MAX_MESSAGE_LEN)
+						t1 = copytext(trim(sanitize(input("Inserte razon:", "Secure. records", null, null) as text)), 1, MAX_MESSAGE_LEN)
 					if(!t1)
 						t1 = "(none)"
 					if(!set_criminal_status(usr, active2, temp_href[2], t1, rank, authcard_access))
-						setTemp("<h3 class='bad'>Error: permission denied.</h3>")
+						setTemp("<h3 class='bad'>Error: Acceso denegado.</h3>")
 						return 1
 			if("rank")
 				if(active1)
@@ -219,7 +219,7 @@
 			screen = SEC_DATA_R_LIST
 
 	if(authenticated)
-		if(href_list["logout"])
+		if(href_list["Cerrar sesion"])
 			authenticated = null
 			screen = null
 			active1 = null
@@ -249,7 +249,7 @@
 			var/datum/data/record/R = locate(href_list["d_rec"])
 			var/datum/data/record/M = locate(href_list["d_rec"])
 			if(!GLOB.data_core.general.Find(R))
-				setTemp("<h3 class='bad'>Record not found!</h3>")
+				setTemp("<h3 class='bad'>Registros no han sido encontrados!</h3>")
 				return 1
 			for(var/datum/data/record/E in GLOB.data_core.security)
 				if(E.fields["name"] == R.fields["name"] && E.fields["id"] == R.fields["id"])
@@ -260,27 +260,27 @@
 
 		else if(href_list["del_all"])
 			var/list/buttons = list()
-			buttons[++buttons.len] = list("name" = "Yes", "icon" = "check", "href" = "del_all2=1", "status" = null)
-			buttons[++buttons.len] = list("name" = "No", "icon" = "times", "href" = null, "status" = null)
-			setTemp("<h3>Are you sure you wish to delete all records?</h3>", buttons)
+			buttons[++buttons.len] = list("name" = "Si", "icon" = "chequear", "href" = "del_all2=1", "status" = null)
+			buttons[++buttons.len] = list("name" = "No", "icon" = "tiempos", "href" = null, "status" = null)
+			setTemp("<h3>Estas seguro de borrar todos los registros?</h3>", buttons)
 
 		else if(href_list["del_alllogs"])
 			var/list/buttons = list()
-			buttons[++buttons.len] = list("name" = "Yes", "icon" = "check", "href" = "del_alllogs2=1", "status" = null)
+			buttons[++buttons.len] = list("name" = "Si", "icon" = "check", "href" = "del_alllogs2=1", "status" = null)
 			buttons[++buttons.len] = list("name" = "No", "icon" = "times", "href" = null, "status" = null)
-			setTemp("<h3>Are you sure you wish to delete all cell logs?</h3>", buttons)
+			setTemp("<h3>Estas seguro de borrar todos los registros de encarcelamientos?</h3>", buttons)
 
 		else if(href_list["del_rg"])
 			if(active1)
 				var/list/buttons = list()
-				buttons[++buttons.len] = list("name" = "Yes", "icon" = "check", "href" = "del_rg2=1", "status" = null)
+				buttons[++buttons.len] = list("name" = "Si", "icon" = "check", "href" = "del_rg2=1", "status" = null)
 				buttons[++buttons.len] = list("name" = "No", "icon" = "times", "href" = null, "status" = null)
-				setTemp("<h3>Are you sure you wish to delete the record (ALL)?</h3>", buttons)
+				setTemp("<h3>Estas seguro de borrar el registro (TODO)?</h3>", buttons)
 
 		else if(href_list["del_r"])
 			if(active1)
 				var/list/buttons = list()
-				buttons[++buttons.len] = list("name" = "Yes", "icon" = "check", "href" = "del_r2=1", "status" = null)
+				buttons[++buttons.len] = list("name" = "Si", "icon" = "check", "href" = "del_r2=1", "status" = null)
 				buttons[++buttons.len] = list("name" = "No", "icon" = "times", "href" = null, "status" = null)
 				setTemp("<h3>Are you sure you wish to delete the record (Security Portion Only)?</h3>", buttons)
 
