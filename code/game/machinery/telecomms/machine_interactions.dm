@@ -166,7 +166,7 @@
 	return istype(O,/obj/machinery/telecomms)
 
 /obj/machinery/telecomms/isLinkedWith(var/obj/O)
-	return O != null && (O in links)
+	return O != null && O in links
 
 /obj/machinery/telecomms/getLink(var/idx)
 	return (idx >= 1 && idx <= links.len) ? links[idx] : null
@@ -362,15 +362,14 @@
 	if(href_list["link"])
 
 		if(P)
-			var/obj/machinery/telecomms/T = P.buffer
-			if(istype(T) && T != src)
-				if(!(src in T.links))
-					T.links += src
+			if(P.buffer && P.buffer != src)
+				if(!(src in P.buffer:links))
+					P.buffer:links.Add(src)
 
-				if(!(T in links))
-					links += T
+				if(!(P.buffer in src.links))
+					src.links.Add(P.buffer)
 
-				temp = "<font color = #666633>-% Successfully linked with [(T.UID())] [T.name] %-</font>"
+				temp = "<font color = #666633>-% Successfully linked with \ref[P.buffer] [P.buffer.name] %-</font>"
 
 			else
 				temp = "<font color = #666633>-% Unable to acquire buffer %-</font>"

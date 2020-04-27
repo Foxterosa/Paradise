@@ -4,8 +4,8 @@
 //////////////////////
 
 /obj/item/reagent_containers/food/snacks/icecream
-	name = "ice cream"
-	desc = "Delicious ice cream."
+	name = "helado"
+	desc = "Delicioso helado."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "icecream_cone"
 	bitesize = 3
@@ -23,24 +23,24 @@
 	overlays += filling
 
 /obj/item/reagent_containers/food/snacks/icecream/icecreamcone
-	name = "ice cream cone"
-	desc = "Delicious ice cream."
+	name = "cono de helado"
+	desc = "Delicioso cono de helado."
 	icon_state = "icecream_cone"
 	volume = 50
 	bitesize = 3
 	list_reagents = list("nutriment" = 3, "sugar" = 7, "ice" = 2)
 
 /obj/item/reagent_containers/food/snacks/icecream/icecreamcup
-	name = "chocolate ice cream cone"
-	desc = "Delicious ice cream."
+	name = "cono de helado de chocolate"
+	desc = "Delicioso cono de helado."
 	icon_state = "icecream_cup"
 	volume = 50
 	bitesize = 6
 	list_reagents = list("nutriment" = 5, "chocolate" = 8, "ice" = 2)
 
 /obj/item/reagent_containers/food/snacks/icecreamsandwich
-	name = "icecream sandwich"
-	desc = "Portable Ice-cream in it's own packaging."
+	name = "sandwich de helado"
+	desc = "Helado portable en su propio equipaje."
 	icon_state = "icecreamsandwich"
 	list_reagents = list("nutriment" = 2, "ice" = 2)
 
@@ -50,14 +50,14 @@
 //////////////////////
 
 /obj/item/reagent_containers/food/snacks/friedbanana
-	name = "Fried Banana"
-	desc = "Goreng Pisang, also known as fried bananas."
+	name = "banana frita"
+	desc = "Goreng Pisang, tambien conocido como banana frita."
 	icon_state = "friedbanana"
 	list_reagents = list("sugar" = 5, "nutriment" = 8, "cornoil" = 4)
 
 /obj/item/reagent_containers/food/snacks/ricepudding
-	name = "Rice Pudding"
-	desc = "Where's the Jam!"
+	name = "pudin de arroz"
+	desc = "Donde esta la jalea?"
 	icon_state = "rpudding"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#FFFBDB"
@@ -65,8 +65,8 @@
 	tastes = list("rice" = 1, "sweetness" = 1)
 
 /obj/item/reagent_containers/food/snacks/spacylibertyduff
-	name = "Spacy Liberty Duff"
-	desc = "Jello gelatin, from Alfred Hubbard's cookbook."
+	name = "libertad espacial duff"
+	desc = "Hola gelatina, del libro de cocina de Alfred Hubbard"
 	icon_state = "spacylibertyduff"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#42B873"
@@ -75,8 +75,8 @@
 	tastes = list("jelly" = 1, "mushroom" = 1)
 
 /obj/item/reagent_containers/food/snacks/amanitajelly
-	name = "Amanita Jelly"
-	desc = "Looks curiously toxic."
+	name = "jalea de amanita"
+	desc = "Curiosamente parece toxico."
 	icon_state = "amanitajelly"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#ED0758"
@@ -85,8 +85,8 @@
 	tastes = list("jelly" = 1, "mushroom" = 1)
 
 /obj/item/reagent_containers/food/snacks/candiedapple
-	name = "Candied Apple"
-	desc = "An apple coated in sugary sweetness."
+	name = "manzana dulce"
+	desc = "Una manzana cubierta de dulce azucar."
 	icon_state = "candiedapple"
 	filling_color = "#F21873"
 	bitesize = 3
@@ -94,8 +94,8 @@
 	tastes = list("apple" = 2, "sweetness" = 2)
 
 /obj/item/reagent_containers/food/snacks/mint
-	name = "mint"
-	desc = "it is only wafer thin."
+	name = "menta"
+	desc = "Para quitarte el apestoso aliento."
 	icon_state = "mint"
 	bitesize = 1
 	filling_color = "#F2F2F2"
