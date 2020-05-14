@@ -22,7 +22,7 @@ GLOBAL_VAR_INIT(ert_request_answered, FALSE)
 		return
 
 	if(!SSticker)
-		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
+		to_chat(usr, "<span class='warning'>La ronda no ha comenzado aun!</span>")
 		return
 
 	if(SSticker.current_state == GAME_STATE_PREGAME)
