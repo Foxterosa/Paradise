@@ -26,11 +26,11 @@
 
 /obj/item/reagent_containers/food/drinks/attack(mob/M, mob/user, def_zone)
 	if(!reagents || !reagents.total_volume)
-		to_chat(user, "<span class='warning'> None of [src] left, oh no!</span>")
+		to_chat(user, "<span class='warning'> No queda mas de tu [src] oh, no!!</span>")
 		return FALSE
 
 	if(!is_drainable())
-		to_chat(user, "<span class='warning'> You need to open [src] first!</span>")
+		to_chat(user, "<span class='warning'> Necesitas abrir tu [src] primero</span>")
 		return FALSE
 
 	if(istype(M, /mob/living/carbon))
@@ -48,7 +48,7 @@
 /obj/item/reagent_containers/food/drinks/MouseDrop(atom/over_object) //CHUG! CHUG! CHUG!
 	var/mob/living/carbon/chugger = over_object
 	if (!(container_type & DRAINABLE))
-		to_chat(chugger, "<span class='notice'>You need to open [src] first!</span>")
+		to_chat(chugger, "<span class='notice'>Necesitas abrir tu [src] primero</span>")
 		return
 	if(istype(chugger) && loc == chugger && src == chugger.get_active_hand() && reagents.total_volume)
 		chugger.visible_message("<span class='notice'>[chugger] raises the [src] to [chugger.p_their()] mouth and starts [pick("chugging","gulping")] it down like [pick("a savage","a mad beast","it's going out of style","there's no tomorrow")]!</span>", "<span class='notice'>You start chugging [src].</span>", "<span class='notice'>You hear what sounds like gulping.</span>")
@@ -65,11 +65,11 @@
 
 	if(target.is_refillable() && is_drainable()) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
-			to_chat(user, "<span class='warning'> [src] is empty.</span>")
+			to_chat(user, "<span class='warning'> [src] esta vacio.</span>")
 			return FALSE
 
 		if(target.reagents.holder_full())
-			to_chat(user, "<span class='warning'> [target] is full.</span>")
+			to_chat(user, "<span class='warning'> [target] esta lleno.</span>")
 			return FALSE
 
 		var/datum/reagent/refill
@@ -79,31 +79,30 @@
 			refillName = reagents.get_master_reagent_name()
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
-		to_chat(user, "<span class='notice'> You transfer [trans] units of the solution to [target].</span>")
+		to_chat(user, "<span class='notice'>Has transferido [trans] unidades de solucion hacia [target].</span>")
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			if(refill in GLOB.drinks) // Only synthesize drinks
 				var/mob/living/silicon/robot/bro = user
 				var/chargeAmount = max(30,4*trans)
 				bro.cell.use(chargeAmount)
-				to_chat(user, "<span class='notice'>Now synthesizing [trans] units of [refillName]...</span>")
+				to_chat(user, "<span class='notice'>Sintetizando [trans] unidades de [refillName]...</span>")
 				addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, trans), 300)
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, user, "<span class='notice'>Cyborg [src] refilled.</span>"), 300)
+				addtimer(CALLBACK(GLOBAL_PROC, .proc/__to_chat, user, "<span class='notice'>Cyborg [src] refilled.</span>"), 300)
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if(!is_refillable())
 			to_chat(user, "<span class='warning'>[src]'s tab isn't open!</span>")
 			return FALSE
 		if(!target.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[target] is empty.</span>")
+			to_chat(user, "<span class='warning'>[target] esta vacio.</span>")
 			return FALSE
 
 		if(reagents.holder_full())
-			to_chat(user, "<span class='warning'>[src] is full.</span>")
-			return FALSE
+			to_chat(user, "<span class='warning'>[src] esta lleno.</span>")
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
-		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
+		to_chat(user, "<span class='notice'> Llenas [src] con [trans] unidades de contenido de [target].</span>")
 
 	return FALSE
 
@@ -111,16 +110,16 @@
 	. = ..()
 	if(in_range(user, src))
 		if(!reagents || reagents.total_volume == 0)
-			. += "<span class='notice'> \The [src] is empty!</span>"
+			. += "<span class='notice'> \The [src] esta vacio!</span>"
 		else if(reagents.total_volume <= volume/4)
-			. += "<span class='notice'> \The [src] is almost empty!</span>"
+			. += "<span class='notice'> \The [src] esta casi vacio!</span>"
 		else if(reagents.total_volume <= volume*0.66)
-			. += "<span class='notice'> \The [src] is half full!</span>"// We're all optimistic, right?!
+			. += "<span class='notice'> \The [src] esta medio lleno!</span>"// We're all optimistic, right?!
 
 		else if(reagents.total_volume <= volume*0.90)
-			. += "<span class='notice'> \The [src] is almost full!</span>"
+			. += "<span class='notice'> \The [src] esta casi lleno!</span>"
 		else
-			. += "<span class='notice'> \The [src] is full!</span>"
+			. += "<span class='notice'> \The [src] esta lleno!</span>"
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
@@ -128,7 +127,7 @@
 
 /obj/item/reagent_containers/food/drinks/trophy
 	name = "pewter cup"
-	desc = "Everyone gets a trophy."
+	desc = "Todos obtienen un trofeo."
 	icon_state = "pewter_cup"
 	w_class = WEIGHT_CLASS_TINY
 	force = 1
@@ -143,7 +142,7 @@
 
 /obj/item/reagent_containers/food/drinks/trophy/gold_cup
 	name = "gold cup"
-	desc = "You're winner!"
+	desc = "Tu eres el ganador!"
 	icon_state = "golden_cup"
 	w_class = WEIGHT_CLASS_BULKY
 	force = 14
@@ -154,7 +153,7 @@
 
 /obj/item/reagent_containers/food/drinks/trophy/silver_cup
 	name = "silver cup"
-	desc = "Best loser!"
+	desc = "El mejor perdedor!"
 	icon_state = "silver_cup"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 10
@@ -165,7 +164,7 @@
 
 /obj/item/reagent_containers/food/drinks/trophy/bronze_cup
 	name = "bronze cup"
-	desc = "At least you ranked!"
+	desc = "Al menos estas clasificado!"
 	icon_state = "bronze_cup"
 	w_class = WEIGHT_CLASS_SMALL
 	force = 5
@@ -183,20 +182,20 @@
 
 /obj/item/reagent_containers/food/drinks/coffee
 	name = "Robust Coffee"
-	desc = "Careful, the beverage you're about to enjoy is extremely hot."
+	desc = "Cuidado, la bebida que estas a punto de disfrutar es extremadamente caliente!."
 	icon_state = "coffee"
 	list_reagents = list("coffee" = 30)
 	resistance_flags = FREEZE_PROOF
 
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
-	desc = "Careful, cold ice, do not chew."
+	desc = "Cuidado, hielo frio, no masticar."
 	icon_state = "icecup"
 	list_reagents = list("ice" = 30)
 
 /obj/item/reagent_containers/food/drinks/tea
 	name = "Duke Purple tea"
-	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
+	desc = "Un insulto a Duke Purple es un insulto a la Reina espacial! Cualquier caballero adecuado peleará contigo, si mancillas este te."
 	icon_state = "teacup"
 	item_state = "coffee"
 	list_reagents = list("tea" = 30)
@@ -208,14 +207,14 @@
 
 /obj/item/reagent_containers/food/drinks/mugwort
 	name = "mugwort tea"
-	desc = "A bitter herbal tea."
+	desc = "Un te de hierbas amargo."
 	icon_state = "manlydorfglass"
 	item_state = "coffee"
 	list_reagents = list("mugwort" = 30)
 
 /obj/item/reagent_containers/food/drinks/h_chocolate
 	name = "Dutch hot coco"
-	desc = "Made in Space South America."
+	desc = "Hecho en Sur America."
 	icon_state = "hot_coco"
 	item_state = "coffee"
 	list_reagents = list("hot_coco" = 30, "sugar" = 5)
@@ -223,7 +222,7 @@
 
 /obj/item/reagent_containers/food/drinks/chocolate
 	name = "hot chocolate"
-	desc = "Made in Space Switzerland."
+	desc = "Hecho en Space Switzerland."
 	icon_state = "hot_coco"
 	item_state = "coffee"
 	list_reagents = list("chocolate" = 30)

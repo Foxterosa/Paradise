@@ -11,7 +11,7 @@
 // END_PREFERENCES
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
-#include "_maps\cyberiad.dm"
+#include "_maps\delta.dm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
@@ -864,6 +864,7 @@
 #include "code\game\objects\items\shooting_range.dm"
 #include "code\game\objects\items\toys.dm"
 #include "code\game\objects\items\trash.dm"
+#include "code\game\objects\items\uno.dm"
 #include "code\game\objects\items\devices\aicard.dm"
 #include "code\game\objects\items\devices\autopsy.dm"
 #include "code\game\objects\items\devices\camera_bug.dm"
@@ -1446,6 +1447,7 @@
 #include "code\modules\crafting\tailoring.dm"
 #include "code\modules\customitems\item_defines.dm"
 #include "code\modules\customitems\item_spawning.dm"
+#include "code\modules\customitems\manaos_custom.dm"
 #include "code\modules\detective_work\detective_work.dm"
 #include "code\modules\detective_work\evidence.dm"
 #include "code\modules\detective_work\footprints_and_rag.dm"

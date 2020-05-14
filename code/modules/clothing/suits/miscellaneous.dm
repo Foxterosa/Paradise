@@ -801,7 +801,7 @@
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/suit/officercoat
-	name = "Clown Officer's Coat"
+	name = "Payaso Officer's Coat"
 	desc = "A classy clown officer's overcoat, also designed by Hugo Boss."
 	icon_state = "officersuit"
 	item_state = "officersuit"
@@ -814,7 +814,7 @@
 		)
 
 /obj/item/clothing/suit/soldiercoat
-	name = "Clown Soldier's Coat"
+	name = "Payaso Soldier's Coat"
 	desc = "An overcoat for the clown soldier, to keep him warm during those cold winter nights on the front."
 	icon_state = "soldiersuit"
 	item_state = "soldiersuit"
@@ -925,7 +925,7 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 
-//Syndicate Chaplain Robe (WOLOLO!)
+//Syndicate Capellan Robe (WOLOLO!)
 /obj/item/clothing/suit/hooded/chaplain_hoodie/missionary_robe
 	description_antag = "This robe is made of reinforced fibers, granting it superior protection. The robes also wirelessly generate power for the neurotransmitter in the linked missionary staff while being worn."
 	armor = list(melee = 10, bullet = 10, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 15, fire = 30, acid = 30)

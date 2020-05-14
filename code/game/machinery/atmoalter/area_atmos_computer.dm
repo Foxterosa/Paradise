@@ -1,6 +1,6 @@
 /obj/machinery/computer/area_atmos
 	name = "area air control"
-	desc = "A computer used to control the stationary scrubbers and pumps in the area."
+	desc = "Una computadora utilizada para controlar los depuradores estacionarios y ventilacion en el area"
 	icon_screen = "area_atmos"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/area_atmos

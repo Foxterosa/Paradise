@@ -1,6 +1,6 @@
 /obj/machinery/biogenerator
 	name = "Biogenerator"
-	desc = "Converts plants into biomass, which can be used to construct useful items."
+	desc = "Convierte las plantas en biomasa, que puede usarse para crear elementos utiles."
 	icon = 'icons/obj/biogenerator.dmi'
 	icon_state = "biogen-empty"
 	density = 1
@@ -79,7 +79,7 @@
 		return ..()
 
 	if(processing)
-		to_chat(user, "<span class='warning'>The biogenerator is currently processing.</span>")
+		to_chat(user, "<span class='warning'>El biogenerador actualmente esta procesando algo.</span>")
 		return
 
 	if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
@@ -100,17 +100,17 @@
 		. = 1 //no afterattack
 		if(!panel_open)
 			if(beaker)
-				to_chat(user, "<span class='warning'>A container is already loaded into the machine.</span>")
+				to_chat(user, "<span class='warning'>Ya hay un contenedor en la maquina.</span>")
 			else
 				if(!user.drop_item())
 					return
 				O.forceMove(src)
 				beaker = O
-				to_chat(user, "<span class='notice'>You add the container to the machine.</span>")
+				to_chat(user, "<span class='notice'>Has añadido un contenedor en la maquina.</span>")
 				update_icon()
 				updateUsrDialog()
 		else
-			to_chat(user, "<span class='warning'>Close the maintenance panel first.</span>")
+			to_chat(user, "<span class='warning'>Primero cierra el panel de mantenimiento.</span>")
 		return
 
 	else if(istype(O, /obj/item/storage/bag/plants))
@@ -119,7 +119,7 @@
 		for(var/obj/item/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= max_items)
-			to_chat(user, "<span class='warning'>The biogenerator is already full! Activate it.</span>")
+			to_chat(user, "<span class='warning'>El biogenerador esta lleno! Activalo ahora.</span>")
 		else
 			for(var/obj/item/reagent_containers/food/snacks/grown/G in PB.contents)
 				if(i >= max_items)
@@ -127,11 +127,11 @@
 				PB.remove_from_storage(G, src)
 				i++
 			if(i<max_items)
-				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator.</span>")
+				to_chat(user, "<span class='info'>Vacias la bolsa de plantas en el biogenerador.</span>")
 			else if(PB.contents.len == 0)
-				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator, filling it to its capacity.</span>")
+				to_chat(user, "<span class='info'>Vacias la bolsa de plantas en el biogenerador, llenadolo a su maxima capacidad.</span>")
 			else
-				to_chat(user, "<span class='info'>You fill the biogenerator to its capacity.</span>")
+				to_chat(user, "<span class='info'>Has llenado el biogenerador a su maxima capacidad.</span>")
 		return 1 //no afterattack
 
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/grown))
@@ -139,16 +139,16 @@
 		for(var/obj/item/reagent_containers/food/snacks/grown/G in contents)
 			i++
 		if(i >= max_items)
-			to_chat(user, "<span class='warning'>The biogenerator is full! Activate it.</span>")
+			to_chat(user, "<span class='warning'>El biogenerador esta lleno! Activalo.</span>")
 		else
 			user.unEquip(O)
 			O.forceMove(src)
-			to_chat(user, "<span class='info'>You put [O.name] in [name]</span>")
+			to_chat(user, "<span class='info'>Has colocado [O.name] en el [name]</span>")
 		return 1 //no afterattack
 	else if (istype(O, /obj/item/disk/design_disk))
-		user.visible_message("[user] begins to load [O] in [src]...",
-			"You begin to load a design from [O]...",
-			"You hear the chatter of a floppy drive.")
+		user.visible_message("[user] comienza a cargar [O] en el [src]...",
+			"Empiezas a cargar un dato desde [O]...",
+			"Escuchas el sonido de un disco")
 		processing = 1
 		var/obj/item/disk/design_disk/D = O
 		if(do_after(user, 10, target = src))
@@ -156,7 +156,7 @@
 		processing = 0
 		return 1
 	else
-		to_chat(user, "<span class='warning'>You cannot put this in [name]!</span>")
+		to_chat(user, "<span class='warning'>No puedes colocar esto en el [name]!</span>")
 
 /obj/machinery/biogenerator/interact(mob/user)
 	if(stat & BROKEN || panel_open)
@@ -165,20 +165,20 @@
 	add_fingerprint(user)
 	var/dat
 	if(processing)
-		dat += "<div class='statusDisplay'>Biogenerator is processing! Please wait...</div><BR>"
+		dat += "<div class='statusDisplay'>El biogenerador esta procesando, por favor espera...</div><BR>"
 	else
 		switch(menustat)
 			if("nopoints")
-				dat += "<div class='statusDisplay'>You do not have enough biomass to create products.<BR>Please, put growns into reactor and activate it.</div>"
+				dat += "<div class='statusDisplay'>No tienes suficiente biomasa para crear productos.<BR>Por favor ponga los materiales en el reactor y activelo.</div>"
 				menustat = "menu"
 			if("complete")
-				dat += "<div class='statusDisplay'>Operation complete.</div>"
+				dat += "<div class='statusDisplay'>Proceso completado.</div>"
 				menustat = "menu"
 			if("void")
-				dat += "<div class='statusDisplay'>Error: No growns inside.<BR>Please, put growns into reactor.</div>"
+				dat += "<div class='statusDisplay'>Error: No materiales colocados.<BR>Por favor, coloca materiales dentro.</div>"
 				menustat = "menu"
 			if("nobeakerspace")
-				dat += "<div class='statusDisplay'>Not enough space left in container. Unable to create product.</div>"
+				dat += "<div class='statusDisplay'>No queda suficiente espacio en el contenedor. No se puede crear productos.</div>"
 				menustat = "menu"
 		if(beaker)
 			var/categories = show_categories.Copy()
@@ -190,7 +190,7 @@
 					if(C in D.category)
 						categories[C] += D
 
-			dat += "<div class='statusDisplay'>Biomass: [points] units.</div><BR>"
+			dat += "<div class='statusDisplay'>Biomasa: [points] unidades.</div><BR>"
 			dat += "<A href='?src=[src.UID()];activate=1'>Activate</A><A href='?src=[src.UID()];detach=1'>Detach Container</A>"
 			for(var/cat in categories)
 				dat += "<h3>[cat]:</h3>"
@@ -205,7 +205,7 @@
 					dat += "([D.materials[MAT_BIOMASS]/efficiency])<br>"
 				dat += "</div>"
 		else
-			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
+			dat += "<div class='statusDisplay'>Contenedor no insertado, por favor inserte un contenedor.</div>"
 
 	var/datum/browser/popup = new(user, "biogen", name, 350, 520)
 	popup.set_content(dat)
@@ -224,7 +224,7 @@
 	if(stat != 0) //NOPOWER etc
 		return
 	if(processing)
-		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
+		to_chat(usr, "<span class='warning'>El biogenerador esta trabajando..</span>")
 		return
 	var/S = 0
 	for(var/obj/item/reagent_containers/food/snacks/grown/I in contents)

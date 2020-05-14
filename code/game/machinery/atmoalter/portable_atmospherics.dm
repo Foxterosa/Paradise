@@ -85,14 +85,14 @@
 
 /obj/machinery/portable_atmospherics/AltClick(mob/living/user)
 	if(!istype(user) || user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		to_chat(user, "<span class='warning'>No puedes hacer esto ahora!</span>")
 		return
 	if(!in_range(src, user))
 		return
 	if(!ishuman(usr) && !issilicon(usr))
 		return
 	if(holding)
-		to_chat(user, "<span class='notice'>You remove [holding] from [src].</span>")
+		to_chat(user, "<span class='notice'>Has quitado [holding] del [src].</span>")
 		replace_tank(user, TRUE)
 
 /obj/machinery/portable_atmospherics/examine(mob/user)
@@ -137,20 +137,20 @@
 		return
 	if(connected_port)
 		disconnect()
-		to_chat(user, "<span class='notice'>You disconnect [name] from the port.</span>")
+		to_chat(user, "<span class='notice'>Has desconectado [name] del puerto.</span>")
 		update_icon()
 	else
 		var/obj/machinery/atmospherics/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/unary/portables_connector/) in loc
 		if(possible_port)
 			if(connect(possible_port))
-				to_chat(user, "<span class='notice'>You connect [src] to the port.</span>")
+				to_chat(user, "<span class='notice'>Has conectado [src] al puerto.</span>")
 				update_icon()
 				return
 			else
-				to_chat(user, "<span class='notice'>[src] failed to connect to the port.</span>")
+				to_chat(user, "<span class='notice'>[src] no se ha podido conectar al puerto.</span>")
 				return
 		else
-			to_chat(user, "<span class='notice'>Nothing happens.</span>")
+			to_chat(user, "<span class='notice'>No pasa nada.</span>")
 
 /obj/machinery/portable_atmospherics/attacked_by(obj/item/I, mob/user)
 	if(I.force < 10 && !(stat & BROKEN))

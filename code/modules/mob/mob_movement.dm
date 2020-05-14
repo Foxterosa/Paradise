@@ -186,7 +186,7 @@
 		if(newdir)
 			direct = newdir
 			n = get_step(mob, direct)
-	
+
 	. = mob.SelfMove(n, direct, delay)
 	mob.setDir(direct)
 

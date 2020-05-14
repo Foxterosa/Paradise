@@ -128,3 +128,23 @@
 
 /area/lavaland/surface/outdoors/explored
 	name = "Lavaland Labor Camp"
+
+/**********************Asteroid**************************/
+
+/area/mine/production/asteroid
+	name = "Asteroid Mining Station Starboard Wing"
+
+/area/mine/living_quarters/asteroid
+	name = "Asteroid Mining Station Port Wing"
+
+/area/mine/eva/asteroid
+	name = "Asteroid Mining Station EVA"
+
+/area/mine/maintenance/asteroid
+	name = "Asteroid Mining Station Communications"
+
+/area/mine/laborcamp/asteroid
+	name = "Asteroid Labor Camp"
+
+/area/mine/laborcamp/security/asteroid
+	name = "Asteroid Labor Camp Security"

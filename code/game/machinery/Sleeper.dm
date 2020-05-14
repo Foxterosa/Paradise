@@ -102,7 +102,7 @@
 			if(world.timeofday > (R.last_addiction_dose + ADDICTION_SPEEDUP_TIME)) // 2.5 minutes
 				addiction_removal_chance = 10
 			if(prob(addiction_removal_chance))
-				to_chat(occupant, "<span class='notice'>You no longer feel reliant on [R.name]!</span>")
+				to_chat(occupant, "<span class='notice'>Ya no te sientes adicto a [R.name]!</span>")
 				occupant.reagents.addiction_list.Remove(R)
 				qdel(R)
 
@@ -127,7 +127,7 @@
 		return
 
 	if(panel_open)
-		to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
+		to_chat(user, "<span class='notice'>Primero cierra el panel de mantenimiento.</span>")
 		return
 
 	ui_interact(user)
@@ -243,7 +243,7 @@
 		return 1
 
 	if(panel_open)
-		to_chat(usr, "<span class='notice'>Close the maintenance panel first.</span>")
+		to_chat(usr, "<span class='notice'>Primero cierra el pantel de mantenimiento.</span>")
 		return 0
 
 	if((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon/ai)))

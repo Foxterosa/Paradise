@@ -1,6 +1,6 @@
 /obj/machinery/cell_charger
-	name = "cell charger"
-	desc = "It charges power cells."
+	name = "cargador de baterias"
+	desc = "Esto carga celulas de energia."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ccharger0"
 	anchored = 1
@@ -45,27 +45,27 @@
 /obj/machinery/cell_charger/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stock_parts/cell))
 		if(stat & BROKEN)
-			to_chat(user, "<span class='warning'>[src] is broken!</span>")
+			to_chat(user, "<span class='warning'>[src] esta roto!</span>")
 			return
 		if(!anchored)
-			to_chat(user, "<span class='warning'>[src] isn't attached to the ground!</span>")
+			to_chat(user, "<span class='warning'>[src] no esta unido al suelo!</span>")
 			return
 		if(charging)
-			to_chat(user, "<span class='warning'>There is already a cell in the charger!</span>")
+			to_chat(user, "<span class='warning'>Ya hay una celula de energia colocada</span>")
 			return
 		else
 			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				to_chat(user, "<span class='warning'>[src] blinks red as you try to insert the cell!</span>")
+				to_chat(user, "<span class='warning'>[src] parpadea en rojo cuando intentar meter la celula de energia</span>")
 				return
 			if(!user.drop_item())
 				return
 
 			I.forceMove(src)
 			charging = I
-			user.visible_message("[user] inserts a cell into the charger.", "<span class='notice'>You insert a cell into the charger.</span>")
+			user.visible_message("[user] inserta una celula de energia en el cargador", "<span class='notice'>Has insertado una celula de energia en el cargador.</span>")
 			chargelevel = -1
 			updateicon()
 	else
@@ -74,7 +74,7 @@
 /obj/machinery/cell_charger/wrench_act(mob/user, obj/item/I)
 	. = TRUE
 	if(charging)
-		to_chat(user, "<span class='warning'>Remove the cell first!</span>")
+		to_chat(user, "<span class='warning'>Quita la celula de energia primero!</span>")
 		return
 	if(!I.use_tool(src, user, 0, volume = I.tool_volume))
 		return
@@ -98,7 +98,7 @@
 	user.put_in_hands(charging)
 	charging.add_fingerprint(user)
 
-	user.visible_message("[user] removes [charging] from [src].", "<span class='notice'>You remove [charging] from [src].</span>")
+	user.visible_message("[user] removes [charging] from [src].", "<span class='notice'>Has quitado [charging] del [src].</span>")
 
 	removecell()
 
@@ -107,7 +107,7 @@
 		return
 
 	charging.forceMove(loc)
-	to_chat(user, "<span class='notice'>You telekinetically remove [charging] from [src].</span>")
+	to_chat(user, "<span class='notice'>Quitas telequineticamente [charging] del [src].</span>")
 
 	removecell()
 

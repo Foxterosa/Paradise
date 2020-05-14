@@ -1,6 +1,6 @@
 /obj/structure/fermenting_barrel
 	name = "wooden barrel"
-	desc = "A large wooden barrel. You can ferment fruits and such inside it, or just use it to hold liquid."
+	desc = "Un gran barril de madera!. Puede fermentar frutas y mas dentro, o simplemente usarlo para almacenar liquidos"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barrel"
 	density = TRUE

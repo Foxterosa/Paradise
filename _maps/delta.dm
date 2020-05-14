@@ -23,6 +23,7 @@ Lovingly ported by Purpose2 to Paradise
 	#include "map_files\generic\Lavaland.dmm"
 	#include "map_files\cyberiad\z6.dmm"
 	#include "map_files\generic\z7.dmm"
+	#include "map_files\generic\z5.dmm"
 
 	#define MAP_FILE "delta.dmm"
 	#define MAP_NAME "Kerberos"
@@ -33,7 +34,8 @@ DECLARE_LEVEL(TELECOMMS, CROSSLINKED, list(REACHABLE, BOOSTS_SIGNAL, AI_OK)),\
 DECLARE_LEVEL(CONSTRUCTION, CROSSLINKED, list(REACHABLE)),\
 DECLARE_LEVEL(MINING, SELFLOOPING, list(REACHABLE, STATION_CONTACT, HAS_WEATHER, ORE_LEVEL, AI_OK)),\
 DECLARE_LEVEL(DERELICT, CROSSLINKED, list(REACHABLE)),\
-DECLARE_LEVEL(EMPTY_AREA, CROSSLINKED, list(REACHABLE)))
+DECLARE_LEVEL(EMPTY_AREA, CROSSLINKED, list(REACHABLE)),\
+DECLARE_LEVEL(ASTEROID, CROSSLINKED, list(REACHABLE, STATION_CONTACT, ORE_LEVEL, AI_OK)))
 
 	#define USING_MAP_DATUM /datum/map/delta
 

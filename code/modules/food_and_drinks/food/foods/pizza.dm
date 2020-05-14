@@ -10,15 +10,15 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
 
 /obj/item/reagent_containers/food/snacks/sliceable/pizza/margherita
-	name = "margherita pizza"
-	desc = "The golden standard of pizzas."
+	name = "pizza margarita"
+	desc = "El estandar dorado de las pizzas."
 	icon_state = "pizzamargherita"
 	slice_path = /obj/item/reagent_containers/food/snacks/margheritaslice
 	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 5)
 
 /obj/item/reagent_containers/food/snacks/margheritaslice
-	name = "margherita slice"
-	desc = "A slice of the classic pizza."
+	name = "trozo de pizza margarita"
+	desc = "Un trozo de una clasica pizza."
 	icon = 'icons/obj/food/pizza.dmi'
 	icon_state = "pizzamargheritaslice"
 	filling_color = "#BAA14C"
@@ -26,24 +26,24 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
 
 /obj/item/reagent_containers/food/snacks/sliceable/pizza/meatpizza
-	name = "meat pizza"
-	desc = "A pizza with meat topping."
+	name = "pizza con carne"
+	desc = "Una pizza con trozos de carne por encima."
 	icon_state = "meatpizza"
 	slice_path = /obj/item/reagent_containers/food/snacks/meatpizzaslice
 	list_reagents = list("protein" = 30, "tomatojuice" = 6, "vitamin" = 8)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 
 /obj/item/reagent_containers/food/snacks/meatpizzaslice
-	name = "meat pizza slice"
-	desc = "A slice of a meaty pizza."
+	name = "trozo de pizza con carne"
+	desc = "Un trozo de pizza con carne."
 	icon = 'icons/obj/food/pizza.dmi'
 	icon_state = "meatpizzaslice"
 	filling_color = "#BAA14C"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 
 /obj/item/reagent_containers/food/snacks/sliceable/pizza/mushroompizza
-	name = "mushroom pizza"
-	desc = "Very special pizza."
+	name = "pizza con setas"
+	desc = "Una muy especial pizza."
 	icon_state = "mushroompizza"
 	slice_path = /obj/item/reagent_containers/food/snacks/mushroompizzaslice
 	list_reagents = list("plantmatter" = 30, "vitamin" = 5)
@@ -51,15 +51,15 @@
 
 
 /obj/item/reagent_containers/food/snacks/mushroompizzaslice
-	name = "mushroom pizza slice"
-	desc = "Maybe it is the last slice of pizza in your life."
+	name = "trozo de pizza con setas"
+	desc = "Puede que tal vez sea tu ultimo trozo de pizza de tu vida"
 	icon = 'icons/obj/food/pizza.dmi'
 	icon_state = "mushroompizzaslice"
 	filling_color = "#BAA14C"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "mushroom" = 1)
 
 /obj/item/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza
-	name = "vegetable pizza"
+	name = "pizza vegetal"
 	desc = "No Tomato Sapiens were harmed during the making of this pizza."
 	icon_state = "vegetablepizza"
 	slice_path = /obj/item/reagent_containers/food/snacks/vegetablepizzaslice
@@ -68,32 +68,32 @@
 
 
 /obj/item/reagent_containers/food/snacks/vegetablepizzaslice
-	name = "vegetable pizza slice"
-	desc = "A slice of the most green pizza of all pizzas not containing green ingredients."
+	name = "trozo de pizza vegetal"
+	desc = "Un trozo de la pizza mas verde de todas las pizzas sin ingredientes de color verde"
 	icon = 'icons/obj/food/pizza.dmi'
 	icon_state = "vegetablepizzaslice"
 	filling_color = "#BAA14C"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "carrot" = 1, "vegetables" = 1)
 
 /obj/item/reagent_containers/food/snacks/sliceable/pizza/hawaiianpizza
-	name = "Hawaiian pizza"
-	desc = "Love it or hate it, this pizza divides opinions. Complete with juicy pineapple."
+	name = "pizza hawaiana"
+	desc = "Odiado o amado, esta pizza divide las opiniones. Completamente jugosa"
 	icon_state = "hawaiianpizza" //NEEDED
 	slice_path = /obj/item/reagent_containers/food/snacks/hawaiianpizzaslice
 	list_reagents = list("protein" = 15, "tomatojuice" = 6, "plantmatter" = 20, "pineapplejuice" = 6, "vitamin" = 5)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 1)
 
 /obj/item/reagent_containers/food/snacks/hawaiianpizzaslice
-	name = "Hawaiian pizza slice"
-	desc = "A slice of polarising pizza."
+	name = "trozo de pizza hawaiana"
+	desc = "Un torzo de pizza desagradable."
 	icon = 'icons/obj/food/pizza.dmi'
 	icon_state = "hawaiianpizzaslice"
 	filling_color = "#e5b437"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 1)
 
 /obj/item/reagent_containers/food/snacks/sliceable/pizza/macpizza
-	name = "mac n cheese pizza"
-	desc = "Gastronomists have yet to classify this dish as 'pizza'."
+	name = "pizza de quedo y macarrones"
+	desc = "Gastronomicos aun no han clasificado este plato como una 'pizza'."
 	icon_state = "macpizza"
 	slice_path = /obj/item/reagent_containers/food/snacks/macpizzaslice
 	list_reagents = list("nutriment" = 40, "vitamin" = 5) //More nutriment because carbs, but it's not any more vitaminicious
@@ -102,7 +102,7 @@
 
 /obj/item/reagent_containers/food/snacks/macpizzaslice
 	name = "mac n cheese pizza slice"
-	desc = "A delicious slice of pizza topped with macaroni cheese... wait, what the hell? Who would do this?!"
+	desc = "Espera, que diantres? Quien querria esto?"
 	icon = 'icons/obj/food/pizza.dmi'
 	icon_state = "macpizzaslice"
 	filling_color = "#ffe45d"
@@ -114,8 +114,8 @@
 //////////////////////
 
 /obj/item/pizzabox
-	name = "pizza box"
-	desc = "A box suited for pizzas."
+	name = "caja para pizzas"
+	desc = "Una caja adecuada para pizzas."
 	icon = 'icons/obj/food/pizza.dmi'
 	icon_state = "pizzabox1"
 
@@ -130,17 +130,17 @@
 
 	// Set appropriate description
 	if(open && pizza)
-		desc = "A box suited for pizzas. It appears to have a [pizza.name] inside."
+		desc = "Una caja adecuada para pizzas. Parece tener una [pizza.name] dentro."
 	else if(boxes.len > 0)
-		desc = "A pile of boxes suited for pizzas. There appears to be [boxes.len + 1] boxes in the pile."
+		desc = "Una pila de cajas adecuadas para pizzas. Parece que hay en ella [boxes.len + 1] cajas en la pila."
 		var/obj/item/pizzabox/topbox = boxes[boxes.len]
 		var/toptag = topbox.boxtag
 		if(toptag != "")
-			desc = "[desc] The box on top has a tag, it reads: '[toptag]'."
+			desc = "[desc] La caja de arriba tiene una etiqueta que pone: '[toptag]'."
 	else
-		desc = "A box suited for pizzas."
+		desc = "Una caja adecuada para pizzas."
 		if(boxtag != "")
-			desc = "[desc] The box has a tag, it reads: '[boxtag]'."
+			desc = "[desc] La caja tiene una etiqueta de pone '[boxtag]'."
 
 	// Icon states and overlays
 	if(open)
@@ -173,7 +173,7 @@
 /obj/item/pizzabox/attack_hand(mob/user)
 	if(open && pizza)
 		user.put_in_hands(pizza)
-		to_chat(user, "<span class='warning'>You take the [pizza] out of the [src].</span>")
+		to_chat(user, "<span class='warning'>Tomas la [pizza] fuera de la [src].</span>")
 		pizza = null
 		update_icon()
 		return
@@ -185,7 +185,7 @@
 		var/obj/item/pizzabox/box = boxes[boxes.len]
 		boxes -= box
 		user.put_in_hands(box)
-		to_chat(user, "<span class='warning'>You remove the topmost [src] from your hand.</span>")
+		to_chat(user, "<span class='warning'>Quitas el mas alto [src] de tu mano.</span>")
 		box.update_icon()
 		update_icon()
 		return
@@ -215,11 +215,11 @@
 				boxes.Add(boxestoadd)
 				box.update_icon()
 				update_icon()
-				to_chat(user, "<span class='warning'>You put the [box] ontop of the [src]!</span>")
+				to_chat(user, "<span class='warning'>Pones la [box] encima de la [src]!</span>")
 			else
-				to_chat(user, "<span class='warning'>The stack is too high!</span>")
+				to_chat(user, "<span class='warning'>La pila es muy alta!</span>")
 		else
-			to_chat(user, "<span class='warning'>Close the [box] first!</span>")
+			to_chat(user, "<span class='warning'>Cierra la [box] primero!</span>")
 		return
 
 	if(istype(I, /obj/item/reagent_containers/food/snacks/sliceable/pizza/)) // Long ass fucking object name
@@ -230,15 +230,15 @@
 
 			update_icon()
 
-			to_chat(user, "<span class='warning'>You put the [I] in the [src]!</span>")
+			to_chat(user, "<span class='warning'>Colocas [I] en [src]!</span>")
 		else
-			to_chat(user, "<span class='warning'>You try to push the [I] through the lid but it doesn't work!</span>")
+			to_chat(user, "<span class='warning'>Intentas empujar el [I] a traves de la tapa pero parece que no funciona!</span>")
 		return
 
 	if(istype(I, /obj/item/pen/))
 		if(open)
 			return
-		var/t = clean_input("Enter what you want to add to the tag:", "Write", null)
+		var/t = clean_input("Pon lo que quieres añadir a la etiqueta:", "Escribir", null)
 		var/obj/item/pizzabox/boxtotagto = src
 		if(boxes.len > 0)
 			boxtotagto = boxes[boxes.len]
