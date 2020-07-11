@@ -15,7 +15,7 @@
 	desc = "Una capsula con una cerradura electronica para el crecimiento de tejido organico."
 	density = 1
 	icon = 'icons/obj/cloning.dmi'
-	icon_state = "pod_0"
+	icon_state = "pod_idle"
 	req_access = list(ACCESS_GENETICS) //For premature unlocking.
 	var/mob/living/carbon/human/occupant
 	var/heal_level //The clone is released once its health reaches this level.
@@ -403,7 +403,9 @@
 
 /obj/machinery/clonepod/screwdriver_act(mob/user, obj/item/I)
 	. = TRUE
-	default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]", I)
+	// These icon states don't really matter since we need to call update_icon() to handle panel open/closed overlays anyway.
+	default_deconstruction_screwdriver(user, null, null, I)
+	update_icon()
 
 /obj/machinery/clonepod/wrench_act(mob/user, obj/item/I)
 	. = TRUE
@@ -529,11 +531,17 @@
 
 /obj/machinery/clonepod/update_icon()
 	..()
-	icon_state = "pod_0"
+	cut_overlays()
+
+	if(panel_open)
+		add_overlay("panel_open")
+
 	if(occupant && !(stat & NOPOWER))
-		icon_state = "pod_1"
-	else if(mess && !panel_open)
-		icon_state = "pod_g"
+		icon_state = "pod_cloning"
+	else if(mess)
+		icon_state = "pod_mess"
+	else
+		icon_state = "pod_idle"
 
 /obj/machinery/clonepod/relaymove(mob/user)
 	if(user.stat == CONSCIOUS)

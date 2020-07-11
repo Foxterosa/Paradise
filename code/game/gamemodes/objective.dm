@@ -60,14 +60,14 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 /datum/objective/assassinate/find_target()
 	..()
 	if(target && target.current)
-		explanation_text = "Asesina a [target.current.real_name], el [target.assigned_role]."
+		explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
 	else
-		explanation_text = "Objetivo Libre"
+		explanation_text = "Free Objective"
 	return target
 
 /datum/objective/assassinate/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || iszombie(target))
+		if(target.current.stat == DEAD)
 			return 1
 		if(issilicon(target.current) || isbrain(target.current)) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
 			return 1
@@ -83,9 +83,9 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 /datum/objective/mutiny/find_target()
 	..()
 	if(target && target.current)
-		explanation_text = "Asesina a [target.current.real_name], el [target.assigned_role]."
+		explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
 	else
-		explanation_text = "Objetivo Libre"
+		explanation_text = "Free Objective"
 	return target
 
 /datum/objective/mutiny/check_completion()
@@ -104,14 +104,14 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 /datum/objective/maroon/find_target()
 	..()
 	if(target && target.current)
-		explanation_text = "Previene que [target.current.real_name], el [target.assigned_role] escape con vida."
+		explanation_text = "Prevent [target.current.real_name], the [target.assigned_role] from escaping alive."
 	else
-		explanation_text = "Objetivo Libre"
+		explanation_text = "Free Objective"
 	return target
 
 /datum/objective/maroon/check_completion()
 	if(target && target.current)
-		if(target.current.stat == DEAD || iszombie(target))
+		if(target.current.stat == DEAD)
 			return 1
 		if(!target.current.ckey)
 			return 1
@@ -132,9 +132,9 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 /datum/objective/debrain/find_target()
 	..()
 	if(target && target.current)
-		explanation_text = "Roba el cerebro de [target.current.real_name] el [target.assigned_role]."
+		explanation_text = "Steal the brain of [target.current.real_name] the [target.assigned_role]."
 	else
-		explanation_text = "Objetivo Libre"
+		explanation_text = "Free Objective"
 	return target
 
 
@@ -159,16 +159,16 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 /datum/objective/protect/find_target()
 	..()
 	if(target && target.current)
-		explanation_text = "Protege a [target.current.real_name], el [target.assigned_role]."
+		explanation_text = "Protect [target.current.real_name], the [target.assigned_role]."
 	else
-		explanation_text = "Objetivo Libre"
+		explanation_text = "Free Objective"
 	return target
 
 /datum/objective/protect/check_completion()
 	if(!target) //If it's a free objective.
 		return 1
 	if(target.current)
-		if(target.current.stat == DEAD || iszombie(target))
+		if(target.current.stat == DEAD)
 			return 0
 		if(issilicon(target.current))
 			return 0
@@ -231,7 +231,7 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 	return 0
 
 /datum/objective/block
-	explanation_text = "No permitas que ninguna forma de vida, ya sea organica o sintetica, escape con vida en la shuttle. IA, Cyborgs y pAI no se consideran vivos."
+	explanation_text = "Do not allow any lifeforms, be it organic or synthetic to escape on the shuttle alive. AIs, Cyborgs, Maintenance drones, and pAIs are not considered alive."
 	martyr_compatible = 1
 
 /datum/objective/block/check_completion()
@@ -243,27 +243,26 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 		return 0
 
 	var/area/A = SSshuttle.emergency.areaInstance
-	var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai, /mob/living/silicon/robot)
 
 	for(var/mob/living/player in GLOB.player_list)
-		if(player.type in protected_mobs)
-			continue
+		if(issilicon(player))
+			continue // If they're silicon, they're not considered alive, skip them.
 
 		if(player.mind && player.stat != DEAD)
 			if(get_area(player) == A)
-				return 0
+				return 0 // If there are any other organic mobs on the shuttle, you failed the objective.
 
 	return 1
 
 /datum/objective/escape
-	explanation_text = "Escapa en la shuttle o una capsula de escape vivo y libre."
+	explanation_text = "Escape on the shuttle or an escape pod alive and free."
 
 /datum/objective/escape/check_completion()
 	if(issilicon(owner.current))
 		return 0
 	if(isbrain(owner.current))
 		return 0
-	if(!owner.current || owner.current.stat == DEAD || iszombie(owner))
+	if(!owner.current || owner.current.stat == DEAD)
 		return 0
 	if(SSticker.force_ending) //This one isn't their fault, so lets just assume good faith
 		return 1
@@ -298,9 +297,9 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 		target = pick(possible_targets)
 	if(target && target.current)
 		target_real_name = target.current.real_name
-		explanation_text = "Escape en la shuttle o una capsula de escape con la identidad de [target_real_name], el [target.assigned_role] mientras portas la id de [target.p_their()]."
+		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role] while wearing [target.p_their()] identification card."
 	else
-		explanation_text = "Objetivo Libre"
+		explanation_text = "Free Objective"
 
 /datum/objective/escape/escape_with_identity/check_completion()
 	if(!target_real_name)
@@ -315,10 +314,10 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 	return 0
 
 /datum/objective/die
-	explanation_text = "Ten una muerte gloriosa."
+	explanation_text = "Die a glorious death."
 
 /datum/objective/die/check_completion()
-	if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current) || iszombie(owner))
+	if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
 		return 1
 	if(issilicon(owner.current) && owner.current != owner.original)
 		return 1
@@ -327,7 +326,7 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 
 
 /datum/objective/survive
-	explanation_text = "Mantente vivo hasta el final."
+	explanation_text = "Stay alive until the end."
 
 /datum/objective/survive/check_completion()
 	if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
@@ -337,7 +336,7 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 	return 1
 
 /datum/objective/nuclear
-	explanation_text = "Destruye la estacion con un dispositivo nuclear."
+	explanation_text = "Destroy the station with a nuclear device."
 	martyr_compatible = 1
 
 /datum/objective/steal
@@ -369,11 +368,11 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 			continue
 		steal_target = O
 
-		explanation_text = "Roba [steal_target]. Fue visto por ultima vez en [get_location()]. "
+		explanation_text = "Steal [steal_target]. One was last seen in [get_location()]. "
 		if(islist(O.protected_jobs) && O.protected_jobs.len)
-			explanation_text += "Tambien puede estar en posesion de [jointext(O.protected_jobs, ", ")]."
+			explanation_text += "It may also be in the possession of the [jointext(O.protected_jobs, ", ")]."
 		return
-	explanation_text = "Objetivo Libre."
+	explanation_text = "Free Objective."
 
 
 /datum/objective/steal/proc/select_target()
@@ -399,6 +398,9 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 /datum/objective/steal/check_completion()
 	if(!steal_target)
 		return 1 // Free Objective
+
+	if(!owner.current)
+		return FALSE
 
 	var/list/all_items = owner.current.GetAllContents()
 
@@ -435,7 +437,7 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 /datum/objective/download
 /datum/objective/download/proc/gen_amount_goal()
 	target_amount = rand(10,20)
-	explanation_text = "Descarga [target_amount] niveles de investigacion."
+	explanation_text = "Download [target_amount] research levels."
 	return target_amount
 
 
@@ -476,7 +478,7 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 					n_p++
 		target_amount = min(target_amount, n_p)
 
-	explanation_text = "Absorbe [target_amount] genomas compatibles."
+	explanation_text = "Acquire [target_amount] compatible genomes. The 'Extract DNA Sting' can be used to stealthily get genomes without killing somebody."
 	return target_amount
 
 /datum/objective/absorb/check_completion()
@@ -495,9 +497,9 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 	target = target_ai.mind
 	if(target && target.current)
 		target_real_name = target.current.real_name
-		explanation_text = "Destruye a [target_real_name], la IA."
+		explanation_text = "Destroy [target_real_name], the AI."
 	else
-		explanation_text = "Objetivo Libre"
+		explanation_text = "Free Objective"
 	return target
 
 /datum/objective/destroy/check_completion()
@@ -508,7 +510,7 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 	return 1
 
 /datum/objective/steal_five_of_type
-	explanation_text = "Roba al menos cinco objetos!"
+	explanation_text = "Steal at least five items!"
 	var/list/wanted_items = list()
 
 /datum/objective/steal_five_of_type/New()
@@ -526,11 +528,11 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 	return stolen_count >= 5
 
 /datum/objective/steal_five_of_type/summon_guns
-	explanation_text = "Roba al menos cinco armas!"
+	explanation_text = "Steal at least five guns!"
 	wanted_items = list(/obj/item/gun)
 
 /datum/objective/steal_five_of_type/summon_magic
-	explanation_text = "Roba al menos cinco artefactos magicos!"
+	explanation_text = "Steal at least five magical artefacts!"
 	wanted_items = list()
 
 /datum/objective/steal_five_of_type/summon_magic/New()
@@ -559,7 +561,7 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 /datum/objective/blood/proc/gen_amount_goal(low = 150, high = 400)
 	target_amount = rand(low,high)
 	target_amount = round(round(target_amount/5)*5)
-	explanation_text = "Acumula por lo menos [target_amount] unidades de sangre."
+	explanation_text = "Accumulate at least [target_amount] total units of blood."
 	return target_amount
 
 /datum/objective/blood/check_completion()
@@ -570,10 +572,11 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 
 // /vg/; Vox Inviolate for humans :V
 /datum/objective/minimize_casualties
-	explanation_text = "Minimiza bajas."
+	explanation_text = "Minimise casualties."
+
 /datum/objective/minimize_casualties/check_completion()
-	if(owner.kills.len>5) return 0
-	return 1
+	return TRUE
+
 
 //Vox heist objectives.
 
@@ -583,7 +586,7 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 
 /datum/objective/heist/kidnap
 /datum/objective/heist/kidnap/choose_target()
-	var/list/roles = list("Jefe de Ingenieros","Director de Ciencias","Robotista","Quimico","Ingeniero")
+	var/list/roles = list("Chief Engineer","Research Director","Roboticist","Chemist","Station Engineer")
 	var/list/possible_targets = list()
 	var/list/priority_targets = list()
 
@@ -601,9 +604,9 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 		target = pick(possible_targets)
 
 	if(target && target.current)
-		explanation_text = "The Shoal necesita a [target.current.real_name], el [target.assigned_role]. Toma a [target.current.p_them()] vivo."
+		explanation_text = "The Shoal has a need for [target.current.real_name], the [target.assigned_role]. Take [target.current.p_them()] alive."
 	else
-		explanation_text = "Objetivo Libre"
+		explanation_text = "Free Objective"
 	return target
 
 /datum/objective/heist/kidnap/check_completion()
@@ -630,37 +633,37 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 		if(1)
 			target = /obj/structure/particle_accelerator
 			target_amount = 6
-			loot = "un acelerador de particulas completo"
+			loot = "a complete particle accelerator"
 		if(2)
 			target = /obj/machinery/the_singularitygen
 			target_amount = 1
-			loot = "un generador de singularidad gravitacional"
+			loot = "a gravitational singularity generator"
 		if(3)
 			target = /obj/machinery/power/emitter
 			target_amount = 4
-			loot = "cuatro emitters"
+			loot = "four emitters"
 		if(4)
 			target = /obj/machinery/nuclearbomb
 			target_amount = 1
-			loot = "una bomba nuclear"
+			loot = "a nuclear bomb"
 		if(5)
 			target = /obj/item/gun
 			target_amount = 6
-			loot = "seis armas. Tasers y otras armas no letas tambien cuentan"
+			loot = "six guns. Tasers and other non-lethal guns are acceptable"
 		if(6)
 			target = /obj/item/gun/energy
 			target_amount = 4
-			loot = "cuatro armas de energia"
+			loot = "four energy guns"
 		if(7)
 			target = /obj/item/gun/energy/laser
 			target_amount = 2
-			loot = "dos armas laser"
+			loot = "two laser guns"
 		if(8)
 			target = /obj/item/gun/energy/ionrifle
 			target_amount = 1
-			loot = "un arma de iones"
+			loot = "an ion gun"
 
-	explanation_text = "Estamos faltantes de herramientas. Roba o comercia [loot]."
+	explanation_text = "We are lacking in hardware. Steal or trade [loot]."
 
 /datum/objective/heist/loot/check_completion()
 	var/total_amount = 0
@@ -701,28 +704,28 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 			target = "metal"
 			target_amount = 300
 		if(2)
-			target = "cristal"
+			target = "glass"
 			target_amount = 200
 		if(3)
 			target = "plasteel"
 			target_amount = 100
 		if(4)
-			target = "plasma solido"
+			target = "solid plasma"
 			target_amount = 100
 		if(5)
-			target = "plata"
+			target = "silver"
 			target_amount = 50
 		if(6)
-			target = "oro"
+			target = "gold"
 			target_amount = 20
 		if(7)
-			target = "uranio"
+			target = "uranium"
 			target_amount = 20
 		if(8)
-			target = "diamante"
+			target = "diamond"
 			target_amount = 20
 
-	explanation_text = "Saquea o comercia con la estacion por [target_amount] de [target]."
+	explanation_text = "Ransack or trade with the station and escape with [target_amount] [target]."
 
 /datum/objective/heist/salvage/check_completion()
 	var/total_amount = 0
@@ -767,7 +770,7 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 
 
 /datum/objective/heist/inviolate_crew
-	explanation_text = "No dejes a ningun Vox atras, vivo o muerto."
+	explanation_text = "Do not leave any Vox behind, alive or dead."
 
 /datum/objective/heist/inviolate_crew/check_completion()
 	var/datum/game_mode/heist/H = SSticker.mode
@@ -776,19 +779,10 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 	return 0
 
 /datum/objective/heist/inviolate_death
-	explanation_text = "Sigue El Inviolate. Minimiza muertes y perdidas de recursos."
+	explanation_text = "Follow the Inviolate. Minimise death and loss of resources."
 
 /datum/objective/heist/inviolate_death/check_completion()
-	var/vox_allowed_kills = 3 // The number of people the vox can accidently kill. Mostly a counter to people killing themselves if a raider touches them to force fail.
-	var/vox_total_kills = 0
-
-	var/datum/game_mode/heist/H = SSticker.mode
-	for(var/datum/mind/raider in H.raiders)
-		vox_total_kills += raider.kills.len // Kills are listed in the mind; uses this to calculate vox kills
-
-	if(vox_total_kills > vox_allowed_kills) return 0
-	return 1
-
+	return TRUE
 
 // Traders
 // These objectives have no check_completion, they exist only to tell Sol Traders what to aim for.
@@ -797,13 +791,13 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 	return
 
 /datum/objective/trade/plasma/choose_target()
-	explanation_text = "Adquiere por lo menos 15 laminas de plasma mediante el comercio."
+	explanation_text = "Acquire at least 15 sheets of plasma through trade."
 
 /datum/objective/trade/credits/choose_target()
-	explanation_text = "Adquiere por lo menos 10,000 creditos mediante el comerio."
+	explanation_text = "Acquire at least 10,000 credits through trade."
 
 //wizard
 
 /datum/objective/wizchaos
-	explanation_text = "Causa estragos en la estacion tanto como puedas. Enviale un mensaje a esa escoria de Nanotrasen!"
+	explanation_text = "Wreak havoc upon the station as much you can. Send those wandless Nanotrasen scum a message!"
 	completed = 1

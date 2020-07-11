@@ -31,18 +31,9 @@ GLOBAL_DATUM_INIT(security_announcement_down, /datum/announcement/priority/secur
 			// Mark down this time to prevent shuttle cheese
 			SSshuttle.emergency_sec_level_time = world.time
 
-		// Reset gamma borgs if the new security level is lower than Gamma.
-		if(level < SEC_LEVEL_GAMMA)
-			for(var/M in GLOB.silicon_mob_list)
-				if(isrobot(M))
-					var/mob/living/silicon/robot/R = M
-					if(istype(R.module, /obj/item/robot_module/combat) && !R.crisis)
-						R.reset_module()
-						to_chat(R, "<span class='warning'>Modo de crisis desactivado. El modulo de combate ya no esta disponible y tu modulo ha sido reiniciado.</span>")
-
 		switch(level)
 			if(SEC_LEVEL_GREEN)
-				GLOB.security_announcement_down.Announce("Todas las amenazas a la estacion han pasado. Todas las armas deben estar enfundadas y las leyes de privacidad se vuelven a aplicar por completo.","¡Atencion! Nivel de seguridad bajado a verde.")
+				GLOB.security_announcement_down.Announce("Todas las amenazas a la estacion han pasado. Todas las armas deben estar enfundadas y las leyes de privacidad se vuelven a aplicar por completo.","ï¿½Atencion! Nivel de seguridad bajado a verde.")
 				GLOB.security_level = SEC_LEVEL_GREEN
 
 				post_status("alert", "outline")
@@ -56,7 +47,7 @@ GLOBAL_DATUM_INIT(security_announcement_down, /datum/announcement/priority/secur
 				if(GLOB.security_level < SEC_LEVEL_BLUE)
 					GLOB.security_announcement_up.Announce("La estacion ha recibido informacion confiable sobre una posible actividad hostil en la estacion. El personal de seguridad puede tener armas visibles y se pueden buscar busquedas aleatorias.","Atencion! Nivel de seguridad elevado a azul.")
 				else
-					GLOB.security_announcement_down.Announce("La amenaza inmediata ha pasado. Es posible que seguridad ya no tenga armas desenfundadas en todo momento, pero puede seguir haciéndolas visibles. Las busquedas aleatorias aun estan permitidas.","Atencion! Nivel de seguridad bajado a azul.")
+					GLOB.security_announcement_down.Announce("La amenaza inmediata ha pasado. Es posible que seguridad ya no tenga armas desenfundadas en todo momento, pero puede seguir haciï¿½ndolas visibles. Las busquedas aleatorias aun estan permitidas.","Atencion! Nivel de seguridad bajado a azul.")
 				GLOB.security_level = SEC_LEVEL_BLUE
 
 				post_status("alert", "outline")
@@ -86,7 +77,7 @@ GLOBAL_DATUM_INIT(security_announcement_down, /datum/announcement/priority/secur
 						FA.overlays += image('icons/obj/monitors.dmi', "overlay_red")
 
 			if(SEC_LEVEL_GAMMA)
-				GLOB.security_announcement_up.Announce("Comando Central ha ordenado el nivel de seguridad Gamma en la estación. Seguridad puede tener armas equipadas en todo momento, y todos los civiles deben buscar inmediatamente a su jefe mas cercano para el transporte a un lugar seguro. La armeria Gamma de la estación se ha desbloqueado y esta lista para usar.","Atencion! Nivel de seguridad gamma activado!", new_sound = sound('sound/effects/new_siren.ogg'))
+				GLOB.security_announcement_up.Announce("Comando Central ha ordenado el nivel de seguridad Gamma en la estaciï¿½n. Seguridad puede tener armas equipadas en todo momento, y todos los civiles deben buscar inmediatamente a su jefe mas cercano para el transporte a un lugar seguro. La armeria Gamma de la estaciï¿½n se ha desbloqueado y esta lista para usar.","Atencion! Nivel de seguridad gamma activado!", new_sound = sound('sound/effects/new_siren.ogg'))
 				GLOB.security_level = SEC_LEVEL_GAMMA
 
 				move_gamma_ship()
