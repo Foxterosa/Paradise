@@ -9,17 +9,17 @@
 // WAS: /datum/bioEffect/mute
 /datum/dna/gene/disability/mute
 	name = "Mute"
-	desc = "Completely shuts down the speech center of the subject's brain."
-	activation_message   = "You feel unable to express yourself at all."
-	deactivation_message = "You feel able to speak freely again."
+	desc = "Cierra completamente el centro del habla en el cerebro del sujeto."
+	activation_message   = "Te sientes incapaz de expresarte."
+	deactivation_message = "Te sientes capaz de hablar libremente otra vez."
 	instability = -GENE_INSTABILITY_MODERATE
-	mutation = MUTE
+	disability = MUTE
 
 /datum/dna/gene/disability/mute/New()
 	..()
-	block = GLOB.muteblock
+	block=GLOB.muteblock
 
-/datum/dna/gene/disability/mute/OnSay(mob/M, message)
+/datum/dna/gene/disability/mute/OnSay(var/mob/M, var/message)
 	return ""
 
 ////////////////////////////////////////
@@ -28,37 +28,38 @@
 
 /datum/dna/gene/disability/radioactive
 	name = "Radioactive"
-	desc = "The subject suffers from constant radiation sickness and causes the same on nearby organics."
-	activation_message = "You feel a strange sickness permeate your whole body."
-	deactivation_message = "You no longer feel awful and sick all over."
+	desc = "El sujeto sufre de enfermedad por radiacion constante y causa lo mismo en los organicos cercanos.."
+	activation_message = "Sientes una extraña enfermedad que impregna todo tu cuerpo."
+	deactivation_message = "Ya no te sientes horrible y enfermo por todas partes."
 	instability = -GENE_INSTABILITY_MAJOR
 	mutation = RADIOACTIVE
 
 /datum/dna/gene/disability/radioactive/New()
 	..()
-	block = GLOB.radblock
+	block=GLOB.radblock
 
 
-/datum/dna/gene/disability/radioactive/can_activate(mob/M, flags)
+/datum/dna/gene/disability/radioactive/can_activate(var/mob/M,var/flags)
 	if(!..())
-		return FALSE
+		return 0
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if((RADIMMUNE in H.dna.species.species_traits) && !(flags & MUTCHK_FORCED))
-			return FALSE
-	return TRUE
+			return 0
+	return 1
 
-/datum/dna/gene/disability/radioactive/OnMobLife(mob/living/carbon/human/H)
-	var/radiation_amount = abs(min(H.radiation - 20,0))
-	H.apply_effect(radiation_amount, IRRADIATE)
-	for(var/mob/living/L in range(1, H))
-		if(L == H)
+/datum/dna/gene/disability/radioactive/OnMobLife(var/mob/living/owner)
+	var/radiation_amount = abs(min(owner.radiation - 20,0))
+	owner.apply_effect(radiation_amount, IRRADIATE)
+	for(var/mob/living/L in range(1, owner))
+		if(L == owner)
 			continue
-		to_chat(L, "<span class='danger'>You are enveloped by a soft green glow emanating from [H].</span>")
+		to_chat(L, "<span class='danger'>Estas envuelto por un suave resplandor verde que emana de [owner].</span>")
 		L.apply_effect(5, IRRADIATE)
+	return
 
-/datum/dna/gene/disability/radioactive/OnDrawUnderlays(mob/M, g)
-	return "rads_s"
+/datum/dna/gene/disability/radioactive/OnDrawUnderlays(var/mob/M,var/g,var/fat)
+	return "rads[fat]_s"
 
 ////////////////////////////////////////
 // Other disabilities
@@ -67,29 +68,29 @@
 // WAS: /datum/bioEffect/fat
 /datum/dna/gene/disability/fat
 	name = "Obesity"
-	desc = "Greatly slows the subject's metabolism, enabling greater buildup of lipid tissue."
-	activation_message = "You feel blubbery and lethargic!"
-	deactivation_message = "You feel fit!"
+	desc = "Reduce la velocidad del metabolismo del sujeto, lo que permite una mayor acumulacion de tejido lipidico."
+	activation_message = "Te sientes lloron y letargico!"
+	deactivation_message = "Te sientes en forma!"
 	instability = -GENE_INSTABILITY_MINOR
 	mutation = OBESITY
 
 /datum/dna/gene/disability/fat/New()
 	..()
-	block = GLOB.fatblock
+	block=GLOB.fatblock
 
 // WAS: /datum/bioEffect/chav
 /datum/dna/gene/disability/speech/chav
 	name = "Chav"
 	desc = "Forces the language center of the subject's brain to construct sentences in a more rudimentary manner."
 	activation_message = "Ye feel like a reet prat like, innit?"
-	deactivation_message = "You no longer feel like being rude and sassy."
+	deactivation_message = "Ya no tienes ganas de ser grosero y atrevido."
 	mutation = CHAV
 
 /datum/dna/gene/disability/speech/chav/New()
 	..()
-	block = GLOB.chavblock
+	block=GLOB.chavblock
 
-/datum/dna/gene/disability/speech/chav/OnSay(mob/M, message)
+/datum/dna/gene/disability/speech/chav/OnSay(var/mob/M, var/message)
 	// THIS ENTIRE THING BEGS FOR REGEX
 	message = replacetext(message,"dick","prat")
 	message = replacetext(message,"comdom","knob'ead")
@@ -100,12 +101,12 @@
 	message = replacetext(message,"what","wot")
 	message = replacetext(message,"drink","wet")
 	message = replacetext(message,"get","giz")
-	message = replacetext(message,"what","wot")
+	message = replacetext(message,"que?","eh?")
 	message = replacetext(message,"no thanks","wuddent fukken do one")
 	message = replacetext(message,"i don't know","wot mate")
 	message = replacetext(message,"no","naw")
 	message = replacetext(message,"robust","chin")
-	message = replacetext(message," hi ","how what how")
+	message = replacetext(message,"hi","how what how")
 	message = replacetext(message,"hello","sup bruv")
 	message = replacetext(message,"kill","bang")
 	message = replacetext(message,"murder","bang")
@@ -113,22 +114,22 @@
 	message = replacetext(message,"window","windy")
 	message = replacetext(message,"break","do")
 	message = replacetext(message,"your","yer")
-	message = replacetext(message,"security","coppers")
+	message = replacetext(message,"seguridad","shitcurity")
 	return message
 
 // WAS: /datum/bioEffect/swedish
 /datum/dna/gene/disability/speech/swedish
 	name = "Swedish"
 	desc = "Forces the language center of the subject's brain to construct sentences in a vaguely norse manner."
-	activation_message = "You feel Swedish, however that works."
-	deactivation_message = "The feeling of Swedishness passes."
+	activation_message = "Te sientes sueco, sin embargo eso funciona."
+	deactivation_message = "El sentimiento de lo sueco pasa."
 	mutation = SWEDISH
 
 /datum/dna/gene/disability/speech/swedish/New()
 	..()
-	block = GLOB.swedeblock
+	block=GLOB.swedeblock
 
-/datum/dna/gene/disability/speech/swedish/OnSay(mob/M, message)
+/datum/dna/gene/disability/speech/swedish/OnSay(var/mob/M, var/message)
 	// svedish
 	message = replacetextEx(message,"W","V")
 	message = replacetextEx(message,"w","v")
@@ -149,17 +150,17 @@
 /datum/dna/gene/disability/unintelligable
 	name = "Unintelligable"
 	desc = "Heavily corrupts the part of the brain responsible for forming spoken sentences."
-	activation_message = "You can't seem to form any coherent thoughts!"
-	deactivation_message = "Your mind feels more clear."
+	activation_message = "No puedes formar ningun pensamiento coherente!"
+	deactivation_message = "Tu mente se siente mas clara."
 	instability = -GENE_INSTABILITY_MINOR
 	mutation = SCRAMBLED
 
 /datum/dna/gene/disability/unintelligable/New()
 	..()
-	block = GLOB.scrambleblock
+	block=GLOB.scrambleblock
 
-/datum/dna/gene/disability/unintelligable/OnSay(mob/M, message)
-	var/prefix = copytext(message,1,2)
+/datum/dna/gene/disability/unintelligable/OnSay(var/mob/M, var/message)
+	var/prefix=copytext(message,1,2)
 	if(prefix == ";")
 		message = copytext(message,2)
 	else if(prefix in list(":","#"))
@@ -174,7 +175,7 @@
 		var/cword = pick(words)
 		words.Remove(cword)
 		var/suffix = copytext(cword,length(cword)-1,length(cword))
-		while(length(cword)>0 && (suffix in list(".",",",";","!",":","?")))
+		while(length(cword)>0 && suffix in list(".",",",";","!",":","?"))
 			cword  = copytext(cword,1              ,length(cword)-1)
 			suffix = copytext(cword,length(cword)-1,length(cword)  )
 		if(length(cword))
@@ -196,21 +197,21 @@
 
 /datum/dna/gene/disability/strong/New()
 	..()
-	block = GLOB.strongblock
+	block=GLOB.strongblock
 
 // WAS: /datum/bioEffect/horns
 /datum/dna/gene/disability/horns
 	name = "Horns"
 	desc = "Enables the growth of a compacted keratin formation on the subject's head."
-	activation_message = "A pair of horns erupt from your head."
-	deactivation_message = "Your horns crumble away into nothing."
+	activation_message = "Un par de cuernos brotan de tu cabeza."
+	deactivation_message = "Tus cuernos se desmoronan en la nada."
 	mutation = HORNS
 
 /datum/dna/gene/disability/horns/New()
 	..()
-	block = GLOB.hornsblock
+	block=GLOB.hornsblock
 
-/datum/dna/gene/disability/horns/OnDrawUnderlays(mob/M, g)
+/datum/dna/gene/disability/horns/OnDrawUnderlays(var/mob/M,var/g,var/fat)
 	return "horns_s"
 
 ////////////////////////////////////////////////////////////////////////
@@ -218,11 +219,11 @@
 /datum/dna/gene/basic/grant_spell/immolate
 	name = "Incendiary Mitochondria"
 	desc = "The subject becomes able to convert excess cellular energy into thermal energy."
-	activation_messages = list("You suddenly feel rather hot.")
-	deactivation_messages = list("You no longer feel uncomfortably hot.")
+	activation_messages = list("De repente te sientes bastante caliente.")
+	deactivation_messages = list("Ya no te sientes incomodamente caliente.")
 	mutation = IMMOLATE
 
-	spelltype = /obj/effect/proc_holder/spell/targeted/immolate
+	spelltype=/obj/effect/proc_holder/spell/targeted/immolate
 
 /datum/dna/gene/basic/grant_spell/immolate/New()
 	..()
@@ -249,6 +250,6 @@
 /obj/effect/proc_holder/spell/targeted/immolate/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/L = user
 	L.adjust_fire_stacks(0.5)
-	L.visible_message("<span class='danger'>[L.name]</b> suddenly bursts into flames!</span>")
+	L.visible_message("<span class='danger'>[L.name]</b> de repente estalla en llamas!</span>")
 	L.IgniteMob()
 	playsound(L.loc, 'sound/effects/bamf.ogg', 50, 0)

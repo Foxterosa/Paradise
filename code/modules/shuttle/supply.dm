@@ -102,10 +102,7 @@
 	var/pointsEarned
 
 	for(var/atom/movable/MA in areaInstance)
-		if(MA.anchored)
-			continue
-		if(istype(MA, /mob/dead))
-			continue
+		if(MA.anchored)	continue
 		SSshuttle.sold_atoms += " [MA.name]"
 
 		// Must be in a crate (or a critter crate)!
@@ -487,7 +484,7 @@
 			var/num_input = input(usr, "Amount:", "How many crates?") as null|num
 			if(!num_input || ..())
 				return 1
-			crates = clamp(round(num_input), 1, 20)
+			crates = Clamp(round(num_input), 1, 20)
 
 		var/timeout = world.time + 600
 		var/reason = input(usr,"Reason:","Why do you require this item?","") as null|text
@@ -668,7 +665,7 @@
 			var/num_input = input(usr, "Amount:", "How many crates?") as null|num
 			if(!num_input || !is_authorized(usr) || ..())
 				return 1
-			crates = clamp(round(num_input), 1, 20)
+			crates = Clamp(round(num_input), 1, 20)
 
 		var/timeout = world.time + 600
 		var/reason = input(usr,"Reason:","Why do you require this item?","") as null|text

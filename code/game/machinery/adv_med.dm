@@ -314,9 +314,9 @@
 
 		occupantData["intOrgan"] = intOrganData
 
-		occupantData["blind"] = (BLINDNESS in occupant.mutations)
-		occupantData["colourblind"] = (COLOURBLIND in occupant.mutations)
-		occupantData["nearsighted"] = (NEARSIGHTED  in occupant.mutations)
+		occupantData["blind"] = (occupant.disabilities & BLIND)
+		occupantData["colourblind"] = (occupant.disabilities & COLOURBLIND)
+		occupantData["nearsighted"] = (occupant.disabilities & NEARSIGHTED)
 
 	data["occupant"] = occupantData
 	return data
@@ -498,11 +498,11 @@
 			dat += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>[infection]:[mech][dead]</td><td></td>"
 			dat += "</tr>"
 		dat += "</table>"
-		if(BLINDNESS in occupant.mutations)
+		if(occupant.disabilities & BLIND)
 			dat += "<font color='red'>Cataracts detected.</font><BR>"
-		if(COLOURBLIND in occupant.mutations)
+		if(occupant.disabilities & COLOURBLIND)
 			dat += "<font color='red'>Photoreceptor abnormalities detected.</font><BR>"
-		if(NEARSIGHTED in occupant.mutations)
+		if(occupant.disabilities & NEARSIGHTED)
 			dat += "<font color='red'>Retinal misalignment detected.</font><BR>"
 	else
 		dat += "[src] is empty."

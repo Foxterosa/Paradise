@@ -38,7 +38,7 @@ GLOBAL_VAR_INIT(sent_syndicate_strike_team, 0)
 	// Find the nuclear auth code
 	var/nuke_code
 	var/temp_code
-	for(var/obj/machinery/nuclearbomb/N in GLOB.machines)
+	for(var/obj/machinery/nuclearbomb/N in world)
 		temp_code = text2num(N.r_code)
 		if(temp_code)//if it's actually a number. It won't convert any non-numericals.
 			nuke_code = N.r_code
@@ -53,8 +53,7 @@ GLOBAL_VAR_INIT(sent_syndicate_strike_team, 0)
 	GLOB.sent_syndicate_strike_team = 1
 
 	//Spawns commandos and equips them.
-	for(var/thing in GLOB.landmarks_list)
-		var/obj/effect/landmark/L = thing
+	for(var/obj/effect/landmark/L in GLOB.landmarks_list)
 
 		if(syndicate_commando_number <= 0)
 			break

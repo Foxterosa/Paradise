@@ -35,11 +35,9 @@
 	..()
 	create_reagents(maximum_fuel)
 	reagents.add_reagent("fuel", maximum_fuel)
+	if(refills_over_time)
+		reagents.reagents_generated_per_cycle += list("fuel" = 1)
 	update_icon()
-
-/obj/item/weldingtool/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/weldingtool/examine(mob/user)
 	. = ..()
@@ -51,15 +49,10 @@
 	return FIRELOSS
 
 /obj/item/weldingtool/process()
-	if(tool_enabled)
-		var/turf/T = get_turf(src)
-		if(T) // Implants for instance won't find a turf
-			T.hotspot_expose(2500, 5)
-		if(prob(5))
-			remove_fuel(1)
-	if(refills_over_time)
-		if(GET_FUEL < maximum_fuel)
-			reagents.add_reagent("fuel", 1)
+	var/turf/T = get_turf(src)
+	T.hotspot_expose(2500, 5)
+	if(prob(5))
+		remove_fuel(1)
 	..()
 
 /obj/item/weldingtool/attack_self(mob/user)
@@ -83,8 +76,7 @@
 		playsound(loc, activation_sound, 50, 1)
 		set_light(light_intensity)
 	else
-		if(!refills_over_time)
-			STOP_PROCESSING(SSobj, src)
+		STOP_PROCESSING(SSobj, src)
 		damtype = BRUTE
 		force = 3
 		hitsound = "swing_hit"
@@ -108,9 +100,9 @@
 		return FALSE
 
 // When welding is about to start, run a normal tool_use_check, then flash a mob if it succeeds.
-/obj/item/weldingtool/tool_start_check(atom/target, mob/living/user, amount=0)
+/obj/item/weldingtool/tool_start_check(mob/living/user, amount=0)
 	. = tool_use_check(user, amount)
-	if(. && user && !ismob(target)) // Don't flash the user if they're repairing robo limbs or repairing a borg etc. Only flash them if the target is an object
+	if(. && user)
 		user.flash_eyes(light_intensity)
 
 /obj/item/weldingtool/use(amount)
@@ -167,7 +159,7 @@
 /obj/item/weldingtool/update_icon()
 	if(low_fuel_changes_icon)
 		var/ratio = GET_FUEL / maximum_fuel
-		ratio = CEILING(ratio*4, 1) * 25
+		ratio = Ceiling(ratio*4) * 25
 		if(ratio == 100)
 			icon_state = initial(icon_state)
 		else

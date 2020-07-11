@@ -59,7 +59,6 @@ GLOBAL_LIST_INIT(support_positions, list(
 	"Magistrado",
 	"Representante de Nanotrasen",
 	"Blueshield"
-	"Explorador"
 ))
 
 GLOBAL_LIST_INIT(supply_positions, list(

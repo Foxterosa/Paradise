@@ -84,7 +84,7 @@ emp_act
 		E.heal_damage(rembrute,0,0,1)
 		rembrute = nrembrute
 		user.visible_message("<span class='alert'>[user] patches some dents on [src]'s [E.name] with [I].</span>")
-	if(bleed_rate && ismachineperson(src))
+	if(bleed_rate && isSynthetic())
 		bleed_rate = 0
 		user.visible_message("<span class='alert'>[user] patches some leaks on [src] with [I].</span>")
 	if(IgniteMob())
@@ -134,7 +134,7 @@ emp_act
 		if(bp && istype(bp ,/obj/item/clothing))
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & def_zone.body_part)
-				protection += C.armor.getRating(type)
+				protection += C.armor[type]
 
 	return protection
 
@@ -185,19 +185,19 @@ emp_act
 	var/block_chance_modifier = round(damage / -3)
 
 	if(l_hand && !istype(l_hand, /obj/item/clothing))
-		var/final_block_chance = l_hand.block_chance - (clamp((armour_penetration-l_hand.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+		var/final_block_chance = l_hand.block_chance - (Clamp((armour_penetration-l_hand.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
 		if(l_hand.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return 1
 	if(r_hand && !istype(r_hand, /obj/item/clothing))
-		var/final_block_chance = r_hand.block_chance - (clamp((armour_penetration-r_hand.armour_penetration)/2,0,100)) + block_chance_modifier //Need to reset the var so it doesn't carry over modifications between attempts
+		var/final_block_chance = r_hand.block_chance - (Clamp((armour_penetration-r_hand.armour_penetration)/2,0,100)) + block_chance_modifier //Need to reset the var so it doesn't carry over modifications between attempts
 		if(r_hand.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return 1
 	if(wear_suit)
-		var/final_block_chance = wear_suit.block_chance - (clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = wear_suit.block_chance - (Clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(wear_suit.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return 1
 	if(w_uniform)
-		var/final_block_chance = w_uniform.block_chance - (clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = w_uniform.block_chance - (Clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return 1
 	return 0
@@ -387,6 +387,11 @@ emp_act
 		to_chat(user, "<span class='warning'>You hack off a chunk of meat from [name]</span>")
 		if(!meatleft)
 			add_attack_logs(user, src, "Chopped up into meat")
+			if(!iscarbon(user))
+				LAssailant = null
+			else
+				LAssailant = user
+
 			qdel(src)
 
 	var/obj/item/organ/external/affecting = get_organ(ran_zone(user.zone_selected))
@@ -452,13 +457,13 @@ emp_act
 					if(bloody)//Apply blood
 						if(wear_mask)
 							wear_mask.add_mob_blood(src)
-							update_inv_wear_mask()
+							update_inv_wear_mask(0)
 						if(head)
 							head.add_mob_blood(src)
-							update_inv_head()
+							update_inv_head(0,0)
 						if(glasses && prob(33))
 							glasses.add_mob_blood(src)
-							update_inv_glasses()
+							update_inv_glasses(0)
 
 
 				if("chest")//Easier to score a stun but lasts less time
@@ -470,10 +475,10 @@ emp_act
 					if(bloody)
 						if(wear_suit)
 							wear_suit.add_mob_blood(src)
-							update_inv_wear_suit()
+							update_inv_wear_suit(1)
 						if(w_uniform)
 							w_uniform.add_mob_blood(src)
-							update_inv_w_uniform()
+							update_inv_w_uniform(1)
 
 
 
@@ -520,16 +525,16 @@ emp_act
 	else
 		add_mob_blood(source)
 		bloody_hands = amount
-	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
+	update_inv_gloves(1)		//updates on-mob overlays for bloody hands and/or bloody gloves
 
 /mob/living/carbon/human/proc/bloody_body(var/mob/living/source)
 	if(wear_suit)
 		wear_suit.add_mob_blood(source)
-		update_inv_wear_suit()
+		update_inv_wear_suit(0)
 		return
 	if(w_uniform)
 		w_uniform.add_mob_blood(source)
-		update_inv_w_uniform()
+		update_inv_w_uniform(1)
 
 /mob/living/carbon/human/proc/handle_suit_punctures(var/damtype, var/damage)
 

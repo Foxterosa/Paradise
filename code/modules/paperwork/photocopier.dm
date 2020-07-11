@@ -340,7 +340,7 @@
 		return 0
 	else
 		playsound(loc, 'sound/machines/ping.ogg', 50, 0)
-		atom_say("Attention: Posterior Placed on Printing Plaque!")
+		atom_say("<span class='danger'>Attention: Posterior Placed on Printing Plaque!</span>")
 		return 1
 
 /obj/machinery/photocopier/emag_act(user as mob)

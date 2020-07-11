@@ -41,7 +41,8 @@
 	if(cooldown > 0)
 		return FALSE
 	cooldown = 2
-	addtimer(CALLBACK(src, .proc/process_cooldown), 10)
+	spawn(10)
+		process_cooldown()
 
 	signal()
 	return TRUE

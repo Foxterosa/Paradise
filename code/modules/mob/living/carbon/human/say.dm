@@ -138,7 +138,7 @@
 		span = mind.speech_span
 	if((COMIC in mutations) \
 		|| (locate(/obj/item/organ/internal/cyberimp/brain/clown_voice) in internal_organs) \
-		|| HAS_TRAIT(src, TRAIT_JESTER))
+		|| GetComponent(/datum/component/jestosterone))
 		span = "sans"
 
 	if(WINGDINGS in mutations)
@@ -151,7 +151,7 @@
 		if(S.speaking && S.speaking.flags & NO_STUTTER)
 			continue
 
-		if(silent || (MUTE in mutations))
+		if(silent || (disabilities & MUTE))
 			S.message = ""
 
 		if(istype(wear_mask, /obj/item/clothing/mask/horsehead))

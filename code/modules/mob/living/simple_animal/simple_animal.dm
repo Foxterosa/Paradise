@@ -144,8 +144,8 @@
 
 /mob/living/simple_animal/updatehealth(reason = "none given")
 	..(reason)
-	health = clamp(health, 0, maxHealth)
-	med_hud_set_health()
+	health = Clamp(health, 0, maxHealth)
+	med_hud_set_status()
 
 /mob/living/simple_animal/StartResting(updating = 1)
 	..()
@@ -166,14 +166,12 @@
 /mob/living/simple_animal/update_stat(reason = "none given")
 	if(status_flags & GODMODE)
 		return
+
+	..(reason)
 	if(stat != DEAD)
-		if(health <= 0)
+		if(health < 1)
 			death()
 			create_debug_log("died of damage, trigger reason: [reason]")
-		else
-			WakeUp()
-			create_debug_log("woke up, trigger reason: [reason]")
-	med_hud_set_status()
 
 /mob/living/simple_animal/proc/handle_automated_action()
 	set waitfor = FALSE

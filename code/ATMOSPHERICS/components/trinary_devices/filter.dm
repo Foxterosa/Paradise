@@ -150,8 +150,11 @@ Filter types:
 				filtered_out.toxins = removed.toxins
 				removed.toxins = 0
 
-				filtered_out.agent_b = removed.agent_b
-				removed.agent_b = 0
+				if(removed.trace_gases.len>0)
+					for(var/datum/gas/trace_gas in removed.trace_gases)
+						if(istype(trace_gas, /datum/gas/oxygen_agent_b))
+							removed.trace_gases -= trace_gas
+							filtered_out.trace_gases += trace_gas
 
 			if(1) //removing O2
 				filtered_out.oxygen = removed.oxygen
@@ -166,8 +169,12 @@ Filter types:
 				removed.carbon_dioxide = 0
 
 			if(4)//removing N2O
-				filtered_out.sleeping_agent = removed.sleeping_agent
-				removed.sleeping_agent = 0
+				if(removed.trace_gases.len>0)
+					for(var/datum/gas/trace_gas in removed.trace_gases)
+						if(istype(trace_gas, /datum/gas/sleeping_agent))
+							removed.trace_gases -= trace_gas
+							filtered_out.trace_gases += trace_gas
+
 			else
 				filtered_out = null
 
@@ -237,7 +244,7 @@ Filter types:
 			pressure = text2num(pressure)
 			. = TRUE
 		if(.)
-			target_pressure = clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+			target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 			investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 	if(href_list["filter"])
 		filter_type = text2num(href_list["filter"])

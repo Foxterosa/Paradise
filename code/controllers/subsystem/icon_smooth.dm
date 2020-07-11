@@ -4,7 +4,6 @@ SUBSYSTEM_DEF(icon_smooth)
 	wait = 1
 	priority = FIRE_PRIOTITY_SMOOTHING
 	flags = SS_TICKER
-	offline_implications = "Objects will no longer smooth together properly. No immediate action is needed."
 
 	var/list/smooth_queue = list()
 

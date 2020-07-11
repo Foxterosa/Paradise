@@ -131,6 +131,7 @@ GLOBAL_LIST_EMPTY(world_uplinks)
 	else
 		var/datum/uplink_item/UI = ItemsReference[href_list["buy_item"]]
 		return buy(UI, UI ? UI.reference : "")
+	return 0
 
 /obj/item/uplink/proc/buy(var/datum/uplink_item/UI, var/reference)
 	if(!UI)
