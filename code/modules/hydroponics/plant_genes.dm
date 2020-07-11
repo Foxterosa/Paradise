@@ -175,6 +175,9 @@
 /datum/plant_gene/trait/proc/on_consume(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
 
+/datum/plant_gene/trait/proc/on_cross(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
+	return
+
 /datum/plant_gene/trait/proc/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	return
 
@@ -214,7 +217,11 @@
 
 	stun_len = min(stun_len, 7) // No fun allowed
 
-	G.AddComponent(/datum/component/slippery, G, stun_len, stun_len, 100, 0, FALSE)
+	G.trip_stun = stun_len
+	G.trip_weaken = stun_len
+	G.trip_chance = 100
+	G.trip_verb = TV_SLIP
+	G.trip_walksafe = FALSE
 
 /datum/plant_gene/trait/cell_charge
 	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.

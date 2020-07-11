@@ -39,6 +39,7 @@
 	var/role_alt_title
 
 	var/datum/job/assigned_job
+	var/list/kills = list()
 	var/list/datum/objective/objectives = list()
 	var/list/datum/objective/special_verbs = list()
 	var/list/targets = list()
@@ -48,6 +49,7 @@
 	var/miming = 0 // Mimo's vow of silence
 	var/list/antag_datums
 	var/speech_span // What span any body this mind has talks in.
+	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 	var/linglink
 	var/datum/vampire/vampire			//vampire holder
@@ -61,6 +63,8 @@
  	var/damnation_type = 0
  	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 	var/hasSoul = TRUE
+
+	var/rev_cooldown = 0
 
 	var/isholy = FALSE // is this person a chaplain or admin role allowed to use bibles
 	var/isblessed = FALSE // is this person blessed by a chaplain?
@@ -90,9 +94,6 @@
 			if(antag_datum.delete_on_mind_deletion)
 				qdel(i)
 		antag_datums = null
-	current = null
-	original = null
-	soulOwner = null
 	return ..()
 
 /datum/mind/proc/transfer_to(mob/living/new_character)
@@ -548,20 +549,11 @@
 				if(objective&&(objective.type in objective_list) && objective:target)
 					def_target = objective:target.current
 				possible_targets = sortAtom(possible_targets)
+				possible_targets += "Free objective"
 
-				var/new_target
-				if(length(possible_targets) > 0)
-					if(alert(usr, "Do you want to pick the objective yourself? No will randomise it", "Pick objective", "Yes", "No") == "Yes")
-						possible_targets += "Free objective"
-						new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
-					else
-						new_target = pick(possible_targets)
-
-					if(!new_target)
-						return
-				else
-					to_chat(usr, "<span class='warning'>No possible target found. Defaulting to a Free objective.</span>")
-					new_target = "Free objective"
+				var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
+				if(!new_target)
+					return
 
 				var/objective_path = text2path("/datum/objective/[new_obj_type]")
 				if(new_target == "Free objective")
@@ -1700,7 +1692,7 @@
 		if(H.w_uniform)
 			jumpsuit = H.w_uniform
 			jumpsuit.color = team_color
-			H.update_inv_w_uniform()
+			H.update_inv_w_uniform(0,0)
 
 	add_attack_logs(missionary, current, "Converted to a zealot for [convert_duration/600] minutes")
 	addtimer(CALLBACK(src, .proc/remove_zealot, jumpsuit), convert_duration) //deconverts after the timer expires
@@ -1717,7 +1709,7 @@
 		jumpsuit.color = initial(jumpsuit.color)		//reset the jumpsuit no matter where our mind is
 		if(ishuman(current))							//but only try updating us if we are still a human type since it is a human proc
 			var/mob/living/carbon/human/H = current
-			H.update_inv_w_uniform()
+			H.update_inv_w_uniform(0,0)
 
 	to_chat(current, "<span class='warning'><b>You seem to have forgotten the events of the past 10 minutes or so, and your head aches a bit as if someone beat it savagely with a stick.</b></span>")
 	to_chat(current, "<span class='warning'><b>This means you don't remember who you were working for or what you were doing.</b></span>")

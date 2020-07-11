@@ -96,7 +96,7 @@
 					UI_style_alpha='[UI_style_alpha]',
 					be_role='[sanitizeSQL(list2params(be_special))]',
 					default_slot='[default_slot]',
-					toggles='[num2text(toggles, CEILING(log(10, (TOGGLES_TOTAL)), 1))]',
+					toggles='[num2text(toggles, Ceiling(log(10, (TOGGLES_TOTAL))))]',
 					atklog='[atklog]',
 					sound='[sound]',
 					randomslot='[randomslot]',
@@ -259,7 +259,7 @@
 		//socks
 		socks = query.item[49]
 		body_accessory = query.item[50]
-		loadout_gear = params2list(query.item[51])
+		gear = params2list(query.item[51])
 		autohiss_mode = text2num(query.item[52])
 
 	//Sanitize
@@ -318,11 +318,7 @@
 	if(!player_alt_titles) player_alt_titles = new()
 	if(!organ_data) src.organ_data = list()
 	if(!rlimb_data) src.rlimb_data = list()
-	if(!loadout_gear) loadout_gear = list()
-
-	// Check if the current body accessory exists
-	if(!GLOB.body_accessory_by_name[body_accessory])
-		body_accessory = null
+	if(!gear) gear = list()
 
 	return 1
 
@@ -340,8 +336,8 @@
 		rlimblist = list2params(rlimb_data)
 	if(!isemptylist(player_alt_titles))
 		playertitlelist = list2params(player_alt_titles)
-	if(!isemptylist(loadout_gear))
-		gearlist = list2params(loadout_gear)
+	if(!isemptylist(gear))
+		gearlist = list2params(gear)
 
 	var/DBQuery/firstquery = GLOB.dbcon.NewQuery("SELECT slot FROM [format_table_name("characters")] WHERE ckey='[C.ckey]' ORDER BY slot")
 	firstquery.Execute()
@@ -495,3 +491,17 @@
 	load_character(C,pick(saves))
 	return 1
 
+/datum/preferences/proc/SetChangelog(client/C,hash)
+	lastchangelog=hash
+	if(GLOB.preferences_datums[C.ckey].toggles & UI_DARKMODE)
+		winset(C, "rpane.changelog", "background-color=#40628a;font-color=#ffffff;font-style=none")
+	else
+		winset(C, "rpane.changelog", "background-color=none;font-style=none")
+	var/DBQuery/query = GLOB.dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastchangelog='[lastchangelog]' WHERE ckey='[C.ckey]'")
+	if(!query.Execute())
+		var/err = query.ErrorMsg()
+		log_game("SQL ERROR during lastchangelog updating. Error : \[[err]\]\n")
+		message_admins("SQL ERROR during lastchangelog updating. Error : \[[err]\]\n")
+		to_chat(C, "Couldn't update your last seen changelog, please try again later.")
+		return
+	return 1

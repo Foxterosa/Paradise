@@ -3,7 +3,6 @@ SUBSYSTEM_DEF(jobs)
 	init_order = INIT_ORDER_JOBS // 12
 	wait = 3000 // 5 minutes (Deciseconds)
 	runlevels = RUNLEVEL_GAME
-	offline_implications = "Job playtime hours will no longer be logged. No immediate action is needed."
 
 	//List of all jobs
 	var/list/occupations = list()
@@ -499,14 +498,13 @@ SUBSYSTEM_DEF(jobs)
 		job.after_spawn(H)
 
 		//Gives glasses to the vision impaired
-		if(NEARSIGHTED in H.mutations)
+		if(H.disabilities & DISABILITY_FLAG_NEARSIGHTED)
 			var/equipped = H.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(H), slot_glasses)
 			if(equipped != 1)
 				var/obj/item/clothing/glasses/G = H.glasses
 				if(istype(G) && !G.prescription)
-					G.prescription = TRUE
+					G.prescription = 1
 					G.name = "prescription [G.name]"
-					H.update_nearsighted_effects()
 	return H
 
 

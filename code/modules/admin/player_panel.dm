@@ -2,10 +2,6 @@
 /datum/admins/proc/player_panel_new()//The new one
 	if(!usr.client.holder)
 		return
-	// This stops the panel from being invoked by mentors who press F7.
-	if(!check_rights(R_ADMIN))
-		message_admins("[key_name_admin(usr)] attempted to invoke player panel without admin rights. If this is a mentor, its a chance they accidentally hit F7. If this is NOT a mentor, there is a high chance an exploit is being used")
-		return
 	var/dat = "<html><head><title>Admin Player Panel</title></head>"
 
 	//javascript, the part that does most of the work~
@@ -268,7 +264,7 @@
 				else
 					M_job = "Living"
 
-			else if(isnewplayer(M))
+			else if(istype(M,/mob/new_player))
 				M_job = "New player"
 
 			else if(isobserver(M))
@@ -356,7 +352,7 @@
 			dat += "<td>[M.real_name]</td>"
 		else if(istype(M, /mob/living/silicon/pai))
 			dat += "<td>pAI</td>"
-		else if(isnewplayer(M))
+		else if(istype(M, /mob/new_player))
 			dat += "<td>New Player</td>"
 		else if(isobserver(M))
 			dat += "<td>Ghost</td>"
@@ -488,9 +484,6 @@
 
 		if(SSticker.mode.wizards.len)
 			dat += check_role_table("Wizards", SSticker.mode.wizards)
-
-		if(SSticker.mode.apprentices.len)
-			dat += check_role_table("Apprentices", SSticker.mode.apprentices)
 
 		if(SSticker.mode.raiders.len)
 			dat += check_role_table("Raiders", SSticker.mode.raiders)

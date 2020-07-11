@@ -141,11 +141,9 @@
 /obj/item/organ/internal/cyberimp/brain/anti_stun/emp_act(severity)
 	if(crit_fail || emp_proof)
 		return
-	crit_fail = TRUE
-	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
-
-/obj/item/organ/internal/cyberimp/brain/anti_stun/proc/reboot()
-	crit_fail = FALSE
+	crit_fail = 1
+	spawn(90 / severity)
+		crit_fail = 0
 
 /obj/item/organ/internal/cyberimp/brain/clown_voice
 	name = "Comical implant"
@@ -232,13 +230,11 @@
 	if(owner.stat == DEAD)
 		return
 	if(owner.nutrition <= hunger_threshold)
-		synthesizing = TRUE
+		synthesizing = 1
 		to_chat(owner, "<span class='notice'>You feel less hungry...</span>")
 		owner.adjust_nutrition(50)
-		addtimer(CALLBACK(src, .proc/synth_cool), 50)
-
-/obj/item/organ/internal/cyberimp/chest/nutriment/proc/synth_cool()
-	synthesizing = FALSE
+		spawn(50)
+			synthesizing = 0
 
 /obj/item/organ/internal/cyberimp/chest/nutriment/emp_act(severity)
 	if(!owner || emp_proof)
@@ -313,15 +309,10 @@
 		var/mob/living/carbon/human/H = owner
 		if(H.stat != DEAD && prob(50 / severity))
 			H.set_heartattack(TRUE)
-			addtimer(CALLBACK(src, .proc/undo_heart_attack), 600 / severity)
-
-/obj/item/organ/internal/cyberimp/chest/reviver/proc/undo_heart_attack()
-	var/mob/living/carbon/human/H = owner
-	if(!istype(H))
-		return
-	H.set_heartattack(FALSE)
-	if(H.stat == CONSCIOUS)
-		to_chat(H, "<span class='notice'>You feel your heart beating again!</span>")
+			spawn(600 / severity)
+				H.set_heartattack(FALSE)
+				if(H.stat == CONSCIOUS)
+					to_chat(H, "<span class='notice'>You feel your heart beating again!</span>")
 
 //BOX O' IMPLANTS
 

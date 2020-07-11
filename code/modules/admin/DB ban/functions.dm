@@ -146,7 +146,7 @@ datum/admins/proc/DB_ban_record(var/bantype, var/mob/banned_mob, var/duration = 
 
 	if(kickbannedckey)
 		if(banned_mob && banned_mob.client && banned_mob.client.ckey == banckey)
-			qdel(banned_mob.client)
+			del(banned_mob.client)
 
 	if(isjobban)
 		jobban_client_fullban(ckey, job)

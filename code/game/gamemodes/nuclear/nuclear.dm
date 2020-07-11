@@ -95,8 +95,7 @@ proc/issyndicate(mob/living/M as mob)
 
 	var/list/turf/synd_spawn = list()
 
-	for(var/thing in GLOB.landmarks_list)
-		var/obj/effect/landmark/A = thing
+	for(var/obj/effect/landmark/A in GLOB.landmarks_list)
 		if(A.name == "Syndicate-Spawn")
 			synd_spawn += get_turf(A)
 			qdel(A)
@@ -141,7 +140,7 @@ proc/issyndicate(mob/living/M as mob)
 /datum/game_mode/nuclear/proc/scale_telecrystals()
 	var/danger
 	danger = GLOB.player_list.len
-	while(!ISMULTIPLE(++danger, 10)) //Increments danger up to the nearest multiple of ten
+	while(!IsMultiple(++danger, 10)) //Increments danger up to the nearest multiple of ten
 
 	total_tc += danger * NUKESCALINGMODIFIER
 
@@ -451,7 +450,7 @@ proc/issyndicate(mob/living/M as mob)
 	if(foecount == GLOB.score_arrested)
 		GLOB.score_allarrested = 1
 
-	for(var/obj/machinery/nuclearbomb/nuke in GLOB.machines)
+	for(var/obj/machinery/nuclearbomb/nuke in world)
 		if(nuke.r_code == "Nope")	continue
 		var/turf/T = get_turf(nuke)
 		var/area/A = T.loc
@@ -492,16 +491,13 @@ proc/issyndicate(mob/living/M as mob)
 	for(var/datum/mind/M in SSticker.mode.syndicates)
 		foecount++
 
-	for(var/mob in GLOB.mob_living_list)
-		var/mob/living/C = mob
+	for(var/mob/living/C in world)
 		if(ishuman(C) || isAI(C) || isrobot(C))
-			if(C.stat == DEAD)
-				continue
-			if(!C.client)
-				continue
+			if(C.stat == 2) continue
+			if(!C.client) continue
 			crewcount++
 
-	var/obj/item/disk/nuclear/N = locate() in GLOB.poi_list
+	var/obj/item/disk/nuclear/N = locate() in world
 	if(istype(N))
 		var/atom/disk_loc = N.loc
 		while(!isturf(disk_loc))

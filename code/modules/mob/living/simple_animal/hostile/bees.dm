@@ -60,7 +60,6 @@
 /mob/living/simple_animal/hostile/poison/bees/New()
 	..()
 	generate_bee_visuals()
-	AddComponent(/datum/component/swarming)
 
 /mob/living/simple_animal/hostile/poison/bees/Destroy()
 	beegent = null

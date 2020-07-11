@@ -244,27 +244,21 @@ proc/age2agedescription(age)
 	var/their_rank = target_records.fields["rank"]
 	switch(criminal_status)
 		if("arrest")
-			status = SEC_RECORD_STATUS_ARREST
+			status = "*Arrest*"
 		if("none")
-			status = SEC_RECORD_STATUS_NONE
+			status = "None"
 		if("execute")
 			if((ACCESS_MAGISTRATE in authcard_access) || (ACCESS_ARMORY in authcard_access))
-				status = SEC_RECORD_STATUS_EXECUTE
+				status = "*Execute*"
 				message_admins("[ADMIN_FULLMONTY(usr)] authorized <span class='warning'>EXECUTION</span> for [their_rank] [their_name], with comment: [comment]")
 			else
 				return 0
-		if("search")
-			status = SEC_RECORD_STATUS_SEARCH
-		if("monitor")
-			status = SEC_RECORD_STATUS_MONITOR
-		if ("demote")
-			status = SEC_RECORD_STATUS_DEMOTE
 		if("incarcerated")
-			status = SEC_RECORD_STATUS_INCARCERATED
+			status = "Incarcerated"
 		if("parolled")
-			status = SEC_RECORD_STATUS_PAROLLED
+			status = "Parolled"
 		if("released")
-			status = SEC_RECORD_STATUS_RELEASED
+			status = "Released"
 	target_records.fields["criminal"] = status
 	log_admin("[key_name_admin(user)] set secstatus of [their_rank] [their_name] to [status], comment: [comment]")
 	target_records.fields["comments"] += "Set to [status] by [user.name] ([user_rank]) on [GLOB.current_date_string] [station_time_timestamp()], comment: [comment]"

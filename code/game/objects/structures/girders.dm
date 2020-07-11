@@ -374,7 +374,7 @@
 
 /obj/structure/girder/CanAStarPass(ID, dir, caller)
 	. = !density
-	if(ismovable(caller))
+	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
 		. = . || mover.checkpass(PASSGRILLE)
 

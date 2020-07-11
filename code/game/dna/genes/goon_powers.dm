@@ -2,28 +2,26 @@
 
 // WAS: /datum/bioEffect/alcres
 /datum/dna/gene/basic/sober
-	name = "Sober"
-	activation_messages = list("You feel unusually sober.")
-	deactivation_messages = list("You feel like you could use a stiff drink.")
+	name="Sober"
+	activation_messages=list("Te sientes inusualmente sobrio.")
+	deactivation_messages = list("Sientes que podrias tomar una bebida fuerte.")
 
-	mutation = SOBER
+	mutation=SOBER
 
 /datum/dna/gene/basic/sober/New()
-	..()
-	block = GLOB.soberblock
+	block=GLOB.soberblock
 
 //WAS: /datum/bioEffect/psychic_resist
 /datum/dna/gene/basic/psychic_resist
-	name = "Psy-Resist"
+	name="Psy-Resist"
 	desc = "Boosts efficiency in sectors of the brain commonly associated with meta-mental energies."
-	activation_messages = list("Your mind feels closed.")
-	deactivation_messages = list("You feel oddly exposed.")
+	activation_messages = list("Tu mente se siente cerrada.")
+	deactivation_messages = list("Te sientes extrañamente expuesto.")
 
-	mutation = PSY_RESIST
+	mutation=PSY_RESIST
 
 /datum/dna/gene/basic/psychic_resist/New()
-	..()
-	block = GLOB.psyresistblock
+	block=GLOB.psyresistblock
 
 /////////////////////////
 // Stealth Enhancers
@@ -32,31 +30,30 @@
 /datum/dna/gene/basic/stealth
 	instability = GENE_INSTABILITY_MODERATE
 
-/datum/dna/gene/basic/stealth/can_activate(mob/M, flags)
+/datum/dna/gene/basic/stealth/can_activate(var/mob/M, var/flags)
 	// Can only activate one of these at a time.
 	if(is_type_in_list(/datum/dna/gene/basic/stealth,M.active_genes))
 		testing("Cannot activate [type]: /datum/dna/gene/basic/stealth in M.active_genes.")
-		return FALSE
-	return ..()
+		return 0
+	return ..(M,flags)
 
-/datum/dna/gene/basic/stealth/deactivate(mob/living/M, connected, flags)
-	..()
-	M.alpha = 255
+/datum/dna/gene/basic/stealth/deactivate(var/mob/M)
+	..(M)
+	M.alpha=255
 
 // WAS: /datum/bioEffect/darkcloak
 /datum/dna/gene/basic/stealth/darkcloak
 	name = "Cloak of Darkness"
-	desc = "Enables the subject to bend low levels of light around themselves, creating a cloaking effect."
-	activation_messages = list("You begin to fade into the shadows.")
-	deactivation_messages = list("You become fully visible.")
-	activation_prob = 25
+	desc = "Permite que el sujeto se doble entre niveles bajos de luz alrededor de si mismo, creando un efecto de camuflaje."
+	activation_messages = list("Empiezas a desvanecerte en las sombras.")
+	deactivation_messages = list("Te vuelves completamente visible.")
+	activation_prob=25
 	mutation = CLOAK
 
 /datum/dna/gene/basic/stealth/darkcloak/New()
-	..()
-	block = GLOB.shadowblock
+	block=GLOB.shadowblock
 
-/datum/dna/gene/basic/stealth/darkcloak/OnMobLife(mob/M)
+/datum/dna/gene/basic/stealth/darkcloak/OnMobLife(var/mob/M)
 	var/turf/simulated/T = get_turf(M)
 	if(!istype(T))
 		return
@@ -69,17 +66,16 @@
 //WAS: /datum/bioEffect/chameleon
 /datum/dna/gene/basic/stealth/chameleon
 	name = "Chameleon"
-	desc = "The subject becomes able to subtly alter light patterns to become invisible, as long as they remain still."
-	activation_messages = list("You feel one with your surroundings.")
-	deactivation_messages = list("You feel oddly visible.")
-	activation_prob = 25
+	desc = "El sujeto puede alterar sutilmente los patrones de luz para volverse invisible, siempre y cuando permanezcan quietos."
+	activation_messages = list("Te sientes uno con tu entorno.")
+	deactivation_messages = list("Te sientes extrañamente visible.")
+	activation_prob=25
 	mutation = CHAMELEON
 
 /datum/dna/gene/basic/stealth/chameleon/New()
-	..()
-	block = GLOB.chameleonblock
+		block=GLOB.chameleonblock
 
-/datum/dna/gene/basic/stealth/chameleon/OnMobLife(mob/M)
+/datum/dna/gene/basic/stealth/chameleon/OnMobLife(var/mob/M)
 	if((world.time - M.last_movement) >= 30 && !M.stat && M.canmove && !M.restrained())
 		M.alpha -= 25
 	else
@@ -90,36 +86,36 @@
 /datum/dna/gene/basic/grant_spell
 	var/obj/effect/proc_holder/spell/spelltype
 
-/datum/dna/gene/basic/grant_spell/activate(mob/M, connected, flags)
+/datum/dna/gene/basic/grant_spell/activate(var/mob/M, var/connected, var/flags)
 	M.AddSpell(new spelltype(null))
 	..()
-	return TRUE
+	return 1
 
-/datum/dna/gene/basic/grant_spell/deactivate(mob/M, connected, flags)
+/datum/dna/gene/basic/grant_spell/deactivate(var/mob/M, var/connected, var/flags)
 	for(var/obj/effect/proc_holder/spell/S in M.mob_spell_list)
 		if(istype(S, spelltype))
 			M.RemoveSpell(S)
 	..()
-	return TRUE
+	return 1
 
 /datum/dna/gene/basic/grant_verb
 	var/verbtype
 
-/datum/dna/gene/basic/grant_verb/activate(mob/M, connected, flags)
+/datum/dna/gene/basic/grant_verb/activate(var/mob/M, var/connected, var/flags)
 	..()
 	M.verbs += verbtype
-	return TRUE
+	return 1
 
-/datum/dna/gene/basic/grant_verb/deactivate(mob/M, connected, flags)
+/datum/dna/gene/basic/grant_verb/deactivate(var/mob/M, var/connected, var/flags)
 	..()
 	M.verbs -= verbtype
 
 // WAS: /datum/bioEffect/cryokinesis
 /datum/dna/gene/basic/grant_spell/cryo
 	name = "Cryokinesis"
-	desc = "Allows the subject to lower the body temperature of others."
-	activation_messages = list("You notice a strange cold tingle in your fingertips.")
-	deactivation_messages = list("Your fingers feel warmer.")
+	desc = "Permite que el sujeto baje la temperatura corporal de los demas."
+	activation_messages = list("Notas un extrano hormigueo frio en la punta de tus dedos.")
+	deactivation_messages = list("Tus dedos se sienten mas calidos.")
 	instability = GENE_INSTABILITY_MODERATE
 	mutation = CRYO
 
@@ -131,7 +127,7 @@
 
 /obj/effect/proc_holder/spell/targeted/cryokinesis
 	name = "Cryokinesis"
-	desc = "Drops the bodytemperature of another person."
+	desc = "Reduce la temperatura corporal de otra persona."
 	panel = "Abilities"
 
 	charge_type = "recharge"
@@ -149,17 +145,17 @@
 
 /obj/effect/proc_holder/spell/targeted/cryokinesis/cast(list/targets, mob/user = usr)
 	if(!targets.len)
-		to_chat(user, "<span class='notice'>No target found in range.</span>")
+		to_chat(user, "<span class='notice'>No se encontro objetivo en el rango.</span>")
 		return
 
 	var/mob/living/carbon/C = targets[1]
 
 	if(!iscarbon(C))
-		to_chat(user, "<span class='warning'>This will only work on normal organic beings.</span>")
+		to_chat(user, "<span class='warning'>Esto solo funcionara en seres organicos normales.</span>")
 		return
 
 	if(COLDRES in C.mutations)
-		C.visible_message("<span class='warning'>A cloud of fine ice crystals engulfs [C.name], but disappears almost instantly!</span>")
+		C.visible_message("<span class='warning'>Una nube de finos cristales de hielo envuelve a [C.name], pero desaparece casi al instante!</span>")
 		return
 	var/handle_suit = 0
 	if(ishuman(C))
@@ -187,6 +183,8 @@
 
 	new/obj/effect/self_deleting(C.loc, icon('icons/effects/genetics.dmi', "cryokinesis"))
 
+	return
+
 /obj/effect/self_deleting
 	density = 0
 	opacity = 0
@@ -195,20 +193,21 @@
 	desc = ""
 	//layer = 15
 
-/obj/effect/self_deleting/New(atom/location, icon/I, duration = 20, oname = "something")
-	name = oname
+/obj/effect/self_deleting/New(var/atom/location, var/icon/I, var/duration = 20, var/oname = "something")
+	src.name = oname
 	loc=location
-	icon = I
-	QDEL_IN(src, duration)
+	src.icon = I
+	spawn(duration)
+		qdel(src)
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 // WAS: /datum/bioEffect/mattereater
 /datum/dna/gene/basic/grant_spell/mattereater
 	name = "Matter Eater"
-	desc = "Allows the subject to eat just about anything without harm."
-	activation_messages = list("You feel hungry.")
-	deactivation_messages = list("You don't feel quite so hungry anymore.")
+	desc = "Permite al sujeto comer casi cualquier cosa sin dano."
+	activation_messages = list("Sientes hambre.")
+	deactivation_messages = list("Ya no tienes tanta hambre.")
 	instability = GENE_INSTABILITY_MINOR
 	mutation = EATER
 
@@ -219,8 +218,8 @@
 	block = GLOB.eatblock
 
 /obj/effect/proc_holder/spell/targeted/eat
-	name = "Eat"
-	desc = "Eat just about anything!"
+	name = "Comer"
+	desc = "¡Come casi cualquier cosa!"
 	panel = "Abilities"
 
 	charge_type = "recharge"
@@ -256,7 +255,7 @@
 		/obj/item/implant
 	)
 
-/obj/effect/proc_holder/spell/targeted/eat/proc/doHeal(mob/user)
+/obj/effect/proc_holder/spell/targeted/eat/proc/doHeal(var/mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		for(var/name in H.bodyparts_by_name)
@@ -288,7 +287,7 @@
 					continue
 			possible_targets += O
 
-	targets += input("Choose the target of your hunger.", "Targeting") as null|anything in possible_targets
+	targets += input("Elige el objetivo de tu hambre.", "Targeting") as null|anything in possible_targets
 
 	if(!targets.len || !targets[1]) //doesn't waste the spell
 		revert_cast(user)
@@ -301,17 +300,17 @@
 	perform(targets, user = user)
 
 /obj/effect/proc_holder/spell/targeted/eat/proc/check_mouth(mob/user = usr)
-	var/can_eat = TRUE
+	var/can_eat = 1
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if((C.head && (C.head.flags_cover & HEADCOVERSMOUTH)) || (C.wear_mask && (C.wear_mask.flags_cover & MASKCOVERSMOUTH) && !C.wear_mask.mask_adjusted))
-			to_chat(C, "<span class='warning'>Your mouth is covered, preventing you from eating!</span>")
-			can_eat = FALSE
+			to_chat(C, "<span class='warning'>Tu boca esta cubierta, evitando que comas!</span>")
+			can_eat = 0
 	return can_eat
 
 /obj/effect/proc_holder/spell/targeted/eat/cast(list/targets, mob/user = usr)
 	if(!targets.len)
-		to_chat(user, "<span class='notice'>No target found in range.</span>")
+		to_chat(user, "<span class='notice'>No se encontro objetivo en el rango.</span>")
 		return
 
 	var/atom/movable/the_item = targets[1]
@@ -321,17 +320,17 @@
 		if(!istype(limb))
 			to_chat(user, "<span class='warning'>You can't eat this part of them!</span>")
 			revert_cast()
-			return FALSE
+			return 0
 		if(istype(limb,/obj/item/organ/external/head))
 			// Bullshit, but prevents being unable to clone someone.
 			to_chat(user, "<span class='warning'>You try to put \the [limb] in your mouth, but [the_item.p_their()] ears tickle your throat!</span>")
 			revert_cast()
-			return FALSE
+			return 0
 		if(istype(limb,/obj/item/organ/external/chest))
 			// Bullshit, but prevents being able to instagib someone.
 			to_chat(user, "<span class='warning'>You try to put [the_item.p_their()] [limb] in your mouth, but it's too big to fit!</span>")
 			revert_cast()
-			return FALSE
+			return 0
 		user.visible_message("<span class='danger'>[user] begins stuffing [the_item]'s [limb.name] into [user.p_their()] gaping maw!</span>")
 		var/oldloc = H.loc
 		if(!do_mob(user,H,EAT_MOB_DELAY))
@@ -351,16 +350,17 @@
 		playsound(user.loc, 'sound/items/eatfood.ogg', 50, 0)
 		qdel(the_item)
 		doHeal(user)
+	return
 
 ////////////////////////////////////////////////////////////////////////
 
 //WAS: /datum/bioEffect/jumpy
 /datum/dna/gene/basic/grant_spell/jumpy
 	name = "Jumpy"
-	desc = "Allows the subject to leap great distances."
+	desc = "Permite al sujeto saltar grandes distancias."
 	//cooldown = 30
-	activation_messages = list("Your leg muscles feel taut and strong.")
-	deactivation_messages = list("Your leg muscles shrink back to normal.")
+	activation_messages = list("Los musculos de tus piernas se sienten tensos y fuertes.")
+	deactivation_messages = list("Los musculos de tus piernas se contraen a la normalidad.")
 	instability = GENE_INSTABILITY_MINOR
 	mutation = JUMPY
 
@@ -372,7 +372,7 @@
 
 /obj/effect/proc_holder/spell/targeted/leap
 	name = "Jump"
-	desc = "Leap great distances!"
+	desc = "Salta grandes distancias!"
 	panel = "Abilities"
 	range = -1
 	include_user = 1
@@ -387,9 +387,9 @@
 	action_icon_state = "genetic_jump"
 
 /obj/effect/proc_holder/spell/targeted/leap/cast(list/targets, mob/user = usr)
-	var/failure = FALSE
+	var/failure = 0
 	if(istype(user.loc,/mob/) || user.lying || user.stunned || user.buckled || user.stat)
-		to_chat(user, "<span class='warning'>You can't jump right now!</span>")
+		to_chat(user, "<span class='warning'>No puedes saltar ahora!</span>")
 		return
 
 	if(istype(user.loc,/turf/))
@@ -397,24 +397,24 @@
 			for(var/mob/M in range(user, 1))
 				if(M.pulling == user)
 					if(!M.restrained() && M.stat == 0 && M.canmove && user.Adjacent(M))
-						failure = TRUE
+						failure = 1
 					else
 						M.stop_pulling()
 
-		user.visible_message("<span class='danger'>[user.name]</b> takes a huge leap!</span>")
+		user.visible_message("<span class='danger'>[user.name]</b> da un gran salto!</span>")
 		playsound(user.loc, 'sound/weapons/thudswoosh.ogg', 50, 1)
 		if(failure)
 			user.Weaken(5)
 			user.Stun(5)
-			user.visible_message("<span class='warning'>[user] attempts to leap away but is slammed back down to the ground!</span>",
-								"<span class='warning'>You attempt to leap away but are suddenly slammed back down to the ground!</span>",
-								"<span class='notice'>You hear the flexing of powerful muscles and suddenly a crash as a body hits the floor.</span>")
-			return FALSE
+			user.visible_message("<span class='warning'>[user] intenta saltar pero cae al suelo!</span>",
+								"<span class='warning'>Intentas saltar, pero de repente te estrellas contra el suelo!</span>",
+								"<span class='notice'>Escuchas la flexion de musculos poderosos y de repente un choque cuando un cuerpo toca el piso.</span>")
+			return 0
 		var/prevLayer = user.layer
 		var/prevFlying = user.flying
 		user.layer = 9
 
-		user.flying = TRUE
+		user.flying = 1
 		for(var/i=0, i<10, i++)
 			step(user, user.dir)
 			if(i < 5) user.pixel_y += 8
@@ -452,12 +452,12 @@
 
 /datum/dna/gene/basic/grant_spell/polymorph
 	name = "Polymorphism"
-	desc = "Enables the subject to reconfigure their appearance to mimic that of others."
+	desc = "Permite al sujeto reconfigurar su apariencia para imitar la de los demas."
 
 	spelltype =/obj/effect/proc_holder/spell/targeted/polymorph
 	//cooldown = 1800
-	activation_messages = list("You don't feel entirely like yourself somehow.")
-	deactivation_messages = list("You feel secure in your identity.")
+	activation_messages = list("No te sientes completamente como tu de alguna manera.")
+	deactivation_messages = list("Te sientes seguro en tu identidad.")
 	instability = GENE_INSTABILITY_MODERATE
 	mutation = POLYMORPH
 
@@ -467,7 +467,7 @@
 
 /obj/effect/proc_holder/spell/targeted/polymorph
 	name = "Polymorph"
-	desc = "Mimic the appearance of others!"
+	desc = "Imita la apariencia de otros!"
 	panel = "Abilities"
 	charge_max = 1800
 
@@ -483,10 +483,10 @@
 /obj/effect/proc_holder/spell/targeted/polymorph/cast(list/targets, mob/user = usr)
 	var/mob/living/M = targets[1]
 	if(!ishuman(M))
-		to_chat(usr, "<span class='warning'>You can only change your appearance to that of another human.</span>")
+		to_chat(usr, "<span class='warning'>Solo puedes cambiar tu apariencia a la de otro humano.</span>")
 		return
 
-	user.visible_message("<span class='warning'>[user]'s body shifts and contorts.</span>")
+	user.visible_message("<span class='warning'>El cuerpo de [user] se contorciona.</span>")
 
 	spawn(10)
 		if(M && user)
@@ -508,7 +508,7 @@
 	activation_messages = list("You suddenly notice more about others than you did before.")
 	deactivation_messages = list("You no longer feel able to sense intentions.")
 	instability = GENE_INSTABILITY_MINOR
-	mutation = EMPATH
+	mutation=EMPATH
 
 /datum/dna/gene/basic/grant_spell/empath/New()
 	..()
@@ -612,5 +612,6 @@
 
 		if(EMPATH in M.mutations)
 			to_chat(M, "<span class='warning'>You sense [user.name] reading your mind.</span>")
-		else if(prob(5) || M.mind.assigned_role=="Chaplain")
+		else if(prob(5) || M.mind.assigned_role=="Capellan")
 			to_chat(M, "<span class='warning'>You sense someone intruding upon your thoughts...</span>")
+		return
